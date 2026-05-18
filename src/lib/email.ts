@@ -1,6 +1,9 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+let _resend: Resend | undefined
+function getResend() {
+  return (_resend ??= new Resend(process.env.RESEND_API_KEY))
+}
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'admin@oishi-niku.com'
 const FROM_EMAIL = 'Oishi Niku <noreply@oishi-niku.com>'
 
@@ -38,7 +41,7 @@ function itemsTable(items: EmailItem[]) {
 }
 
 export async function sendOrderNotification(order: OrderEmailData) {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM_EMAIL,
     to: ADMIN_EMAIL,
     subject: `New Order #${order.id} — ${order.shipping_name}`,
@@ -72,7 +75,7 @@ export async function sendOrderNotification(order: OrderEmailData) {
 }
 
 export async function sendCustomerConfirmation(order: OrderEmailData) {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM_EMAIL,
     to: order.shipping_email,
     subject: `Order Confirmed — #${order.id}`,
@@ -108,7 +111,7 @@ export async function sendShippingNotification(data: {
   customerName: string
   trackingNumber: string
 }) {
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM_EMAIL,
     to: data.customerEmail,
     subject: `Your Order #${data.orderId} Has Shipped!`,
