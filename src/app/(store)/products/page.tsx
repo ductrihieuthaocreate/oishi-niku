@@ -1,8 +1,10 @@
-import { Suspense } from 'react'
+﻿import { Suspense } from 'react'
 import { sql } from '@/lib/db'
 import { ProductCard } from '@/components/product/product-card'
 import { ProductFilters } from '@/components/product/product-filters'
 import type { Product, Category } from '@/lib/types'
+
+export const dynamic = 'force-dynamic'
 
 const PAGE_SIZE = 24
 

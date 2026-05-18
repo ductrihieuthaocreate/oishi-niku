@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { sql } from '@/lib/db'
 import { formatPrice, formatDate } from '@/lib/utils'
 import {
@@ -6,6 +6,8 @@ import {
   ArrowRight, TrendingUp, Plus, Eye, BarChart3,
 } from 'lucide-react'
 import type { Order, Product } from '@/lib/types'
+
+export const dynamic = 'force-dynamic'
 
 async function getDashboardData() {
   const [
@@ -115,7 +117,7 @@ export default async function AdminDashboard() {
       color: 'text-yellow-400',
       bg: 'bg-yellow-500/10',
       border: 'border-yellow-500/20',
-      sub: '≤ 5 units left',
+      sub: 'â‰¤ 5 units left',
     },
   ]
 
@@ -165,7 +167,7 @@ export default async function AdminDashboard() {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4 text-primary" />
-              <h2 className="font-heading tracking-wider text-foreground">REVENUE — LAST 7 DAYS</h2>
+              <h2 className="font-heading tracking-wider text-foreground">REVENUE â€” LAST 7 DAYS</h2>
             </div>
             <span className="text-xs text-muted-foreground">Daily totals</span>
           </div>

@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import { sql } from '@/lib/db'
 import { ProductForm } from '../product-form'
+
+export const dynamic = 'force-dynamic'
 import { updateProduct } from '../actions'
 import type { Product, Category } from '@/lib/types'
 

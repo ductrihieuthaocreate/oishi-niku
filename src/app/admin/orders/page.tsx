@@ -1,8 +1,10 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { sql } from '@/lib/db'
 import { formatPrice, formatDate } from '@/lib/utils'
 import { ShoppingCart } from 'lucide-react'
 import type { Order } from '@/lib/types'
+
+export const dynamic = 'force-dynamic'
 
 interface PageProps {
   searchParams: Promise<{ status?: string; q?: string }>
@@ -162,7 +164,7 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
                       )}
                     </td>
                     <td className="px-4 py-3.5 hidden md:table-cell">
-                      <p className="text-sm text-foreground">{order.shipping_name || '—'}</p>
+                      <p className="text-sm text-foreground">{order.shipping_name || 'â€”'}</p>
                       <p className="text-xs text-muted-foreground">{order.shipping_email}</p>
                     </td>
                     <td className="px-4 py-3.5 hidden sm:table-cell">

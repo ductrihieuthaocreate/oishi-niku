@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import { sql } from '@/lib/db'
 import { ProductGallery } from '@/components/product/product-gallery'
+
+export const dynamic = 'force-dynamic'
 import { AddToCartButton } from '@/components/product/add-to-cart-button'
 import { ProductCard } from '@/components/product/product-card'
 import { Badge } from '@/components/ui/badge'

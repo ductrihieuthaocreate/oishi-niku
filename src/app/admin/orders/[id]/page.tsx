@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import { sql } from '@/lib/db'
 import { Button } from '@/components/ui/button'
+
+export const dynamic = 'force-dynamic'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { formatPrice, formatDate } from '@/lib/utils'

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { sql } from '@/lib/db'
 import { ProductCard } from '@/components/product/product-card'
@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import type { Product } from '@/lib/types'
 
+export const dynamic = 'force-dynamic'
+
 
 const faqs = [
   { q: 'What is the minimum order quantity?', a: 'Our minimum order is 20kg per product. For mixed pallets, the minimum total order is 100kg. Volume discounts apply automatically at 200kg, 500kg, and 1000kg thresholds.' },
-  { q: 'How is the frozen meat packaged and shipped?', a: 'All products are vacuum-sealed and packed in insulated cartons with dry ice. We maintain a full cold chain from our warehouse to your door, ensuring product temperature never exceeds -18°C.' },
+  { q: 'How is the frozen meat packaged and shipped?', a: 'All products are vacuum-sealed and packed in insulated cartons with dry ice. We maintain a full cold chain from our warehouse to your door, ensuring product temperature never exceeds -18Â°C.' },
   { q: 'What certifications do your products carry?', a: 'Our supply chain is HACCP certified and all products meet international food safety standards. We can provide full traceability documentation, halal certification, and country-of-origin certificates on request.' },
   { q: 'Do you offer custom cuts for restaurants or hotels?', a: 'Yes. We offer custom portioning, trimming, and labelling for B2B clients with recurring orders. Contact us to discuss your specification requirements.' },
   { q: 'What are the payment and credit terms?', a: 'We accept bank transfer, and offer NET-30 credit terms for approved business accounts. First-time orders require prepayment. Contact our sales team to apply for a trade account.' },
@@ -99,7 +101,7 @@ export default async function HomePage() {
             <p className="text-primary font-medium tracking-widest uppercase mb-4">Partner With Us</p>
             <h2 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground mb-6">OPEN A TRADE ACCOUNT</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              Restaurants, hotels, and food distributors — get access to wholesale pricing, NET-30 credit terms, and a dedicated account manager.
+              Restaurants, hotels, and food distributors â€” get access to wholesale pricing, NET-30 credit terms, and a dedicated account manager.
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input

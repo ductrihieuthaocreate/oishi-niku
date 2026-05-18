@@ -1,5 +1,7 @@
-import { sql } from '@/lib/db'
+﻿import { sql } from '@/lib/db'
 import {
+
+export const dynamic = 'force-dynamic'
   Settings, Database, Mail, Globe, ShieldCheck,
   CheckCircle, XCircle, ImageIcon,
 } from 'lucide-react'
@@ -102,7 +104,7 @@ export default async function AdminSettingsPage() {
           Order confirmation and shipping notifications sent via Resend.
         </p>
         <div className="text-xs text-muted-foreground space-y-0.5">
-          <p>Admin email: <span className="text-foreground font-mono">{process.env.ADMIN_EMAIL || '—'}</span></p>
+          <p>Admin email: <span className="text-foreground font-mono">{process.env.ADMIN_EMAIL || 'â€”'}</span></p>
           <p>Status: <span className={resendOk ? 'text-green-400' : 'text-yellow-400'}>{resendOk ? 'Configured' : 'Needs RESEND_API_KEY in .env.local'}</span></p>
         </div>
       </div>
@@ -120,7 +122,7 @@ export default async function AdminSettingsPage() {
           ].map(v => (
             <div key={v.key} className="flex items-center justify-between text-xs py-2 border-b border-border/50 last:border-0">
               <span className="text-muted-foreground font-mono">{v.key}</span>
-              <span className="text-foreground font-mono truncate max-w-[260px] text-right">{v.value || '—'}</span>
+              <span className="text-foreground font-mono truncate max-w-[260px] text-right">{v.value || 'â€”'}</span>
             </div>
           ))}
         </div>
@@ -137,15 +139,15 @@ export default async function AdminSettingsPage() {
         <ul className="space-y-2 text-sm text-muted-foreground">
           <li className={`flex items-start gap-2 ${dbOk ? 'text-green-400' : ''}`}>
             {dbOk ? <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" /> : <XCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-red-400" />}
-            <span>Neon — run <code className="text-primary">database/schema.sql</code> in the Neon SQL editor and set <code className="text-primary">DATABASE_URL</code></span>
+            <span>Neon â€” run <code className="text-primary">database/schema.sql</code> in the Neon SQL editor and set <code className="text-primary">DATABASE_URL</code></span>
           </li>
           <li className={`flex items-start gap-2 ${cloudinaryOk ? 'text-green-400' : ''}`}>
             {cloudinaryOk ? <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" /> : <XCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-yellow-400" />}
-            <span>Cloudinary — create account, copy credentials into <code className="text-primary">.env.local</code></span>
+            <span>Cloudinary â€” create account, copy credentials into <code className="text-primary">.env.local</code></span>
           </li>
           <li className={`flex items-start gap-2 ${resendOk ? 'text-green-400' : ''}`}>
             {resendOk ? <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" /> : <XCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-yellow-400" />}
-            <span>Resend — create account at resend.com, copy API key into <code className="text-primary">.env.local</code></span>
+            <span>Resend â€” create account at resend.com, copy API key into <code className="text-primary">.env.local</code></span>
           </li>
         </ul>
       </div>
