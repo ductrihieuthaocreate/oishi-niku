@@ -1,10 +1,10 @@
 ﻿import { sql } from '@/lib/db'
 import {
-
-export const dynamic = 'force-dynamic'
   Settings, Database, Mail, Globe, ShieldCheck,
   CheckCircle, XCircle, ImageIcon,
 } from 'lucide-react'
+
+export const dynamic = 'force-dynamic'
 
 async function checkConnections() {
   let dbOk = false

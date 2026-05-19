@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Package } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default function OrdersPage() {
   return (
     <div className="max-w-lg mx-auto px-4 py-24 text-center">
