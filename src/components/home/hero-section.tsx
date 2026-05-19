@@ -8,8 +8,8 @@ import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const MARQUEE_WORDS = [
-  'FROZEN', 'BULK ORDER', 'B2B', 'WHOLESALE', 'BEEF', 'PORK', 'CHICKEN',
-  'FROZEN SUPPLY', 'RELIABLE', 'BULK CUTS', 'COLD CHAIN', 'OISHI NIKU',
+  '冷凍', '大口注文', 'B2B', '卸売', '牛肉', '豚肉', '鶏肉',
+  '冷凍供給', '信頼性', 'バルクカット', 'コールドチェーン', 'OISHI NIKU',
 ]
 
 export function HeroSection() {
@@ -55,7 +55,7 @@ export function HeroSection() {
             transition={{ delay: 0.1 }}
             className="text-primary font-medium tracking-widest uppercase mb-4 text-xs sm:text-sm"
           >
-            Wholesale Frozen Meat Supplier
+            冷凍肉卸売業者
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -63,11 +63,11 @@ export function HeroSection() {
             transition={{ delay: 0.2 }}
             className="font-heading text-[2.8rem] sm:text-6xl lg:text-9xl tracking-wider text-foreground mb-5 lg:mb-8 leading-none"
           >
-            FROZEN MEAT
+            冷凍肉
             <br />
-            <span className="text-primary">BULK</span>
+            <span className="text-primary">大量仕入れ</span>
             <br />
-            SUPPLY
+            安定供給
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -75,7 +75,7 @@ export function HeroSection() {
             transition={{ delay: 0.3 }}
             className="text-sm sm:text-lg text-muted-foreground max-w-xl mb-8"
           >
-            Reliable frozen meat supply for restaurants, hotels, and food businesses. Consistent quality, competitive bulk pricing, and cold-chain delivery you can count on.
+            レストラン、ホテル、食品事業者向けの信頼できる冷凍肉供給。一貫した品質、競争力のある大口価格、確かなコールドチェーン配送。
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -85,7 +85,7 @@ export function HeroSection() {
           >
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading text-lg tracking-wider gap-2">
               <Link href="/products">
-                VIEW CATALOG
+                商品カタログを見る
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>

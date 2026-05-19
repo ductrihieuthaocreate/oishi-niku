@@ -33,7 +33,7 @@ function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">メールアドレス</Label>
         <Input
           id="email"
           name="email"
@@ -45,7 +45,7 @@ function LoginForm() {
         />
       </div>
       <div>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">パスワード</Label>
         <Input
           id="password"
           name="password"
@@ -70,7 +70,7 @@ function LoginForm() {
         size="lg"
       >
         <LogIn className="w-5 h-5" />
-        {isLoading ? 'SIGNING IN...' : 'SIGN IN'}
+        {isLoading ? 'サインイン中...' : 'サインイン'}
       </Button>
     </form>
   )
@@ -84,8 +84,8 @@ export default function LoginPage() {
           <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4">
             <Lock className="w-5 h-5 text-primary" />
           </div>
-          <h1 className="font-heading text-4xl tracking-wider text-foreground mb-2">ADMIN LOGIN</h1>
-          <p className="text-muted-foreground">Oishi Niku Admin Console</p>
+          <h1 className="font-heading text-4xl tracking-wider text-foreground mb-2">管理者ログイン</h1>
+          <p className="text-muted-foreground">Oishi Niku 管理コンソール</p>
         </div>
 
         <div className="bg-card border border-border rounded-2xl p-8">

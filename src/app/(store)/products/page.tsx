@@ -66,9 +66,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10">
-        <p className="text-primary font-medium tracking-widest uppercase mb-2 text-xs sm:text-sm">Our Selection</p>
-        <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl tracking-wider text-foreground">ALL PRODUCTS</h1>
-        <p className="text-muted-foreground mt-2">{total} products</p>
+        <p className="text-primary font-medium tracking-widest uppercase mb-2 text-xs sm:text-sm">商品一覧</p>
+        <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl tracking-wider text-foreground">全商品</h1>
+        <p className="text-muted-foreground mt-2">{total}件の商品</p>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
@@ -105,8 +105,8 @@ export default async function ProductsPage({ searchParams }: PageProps) {
         </>
       ) : (
         <div className="text-center py-24 border border-dashed border-border rounded-xl">
-          <p className="text-muted-foreground text-xl mb-2">No products found</p>
-          <p className="text-sm text-muted-foreground">Try adjusting your filters or search term.</p>
+          <p className="text-muted-foreground text-xl mb-2">商品が見つかりません</p>
+          <p className="text-sm text-muted-foreground">フィルターまたは検索キーワードを変更してください。</p>
         </div>
       )}
     </div>

@@ -91,7 +91,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   type="text"
                   value={query}
                   onChange={e => setQuery(e.target.value)}
-                  placeholder="Search for wagyu, pork, chicken..."
+                  placeholder="和牛、豚肉、鶏肉を検索..."
                   className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground text-lg outline-none"
                 />
                 {isLoading && <Loader2 className="w-5 h-5 text-muted-foreground animate-spin" />}
@@ -132,7 +132,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               )}
 
               {query && !isLoading && results.length === 0 && (
-                <p className="mt-4 text-muted-foreground text-sm">No products found for "{query}"</p>
+                <p className="mt-4 text-muted-foreground text-sm">&quot;{query}&quot; の検索結果はありません</p>
               )}
             </div>
           </motion.div>

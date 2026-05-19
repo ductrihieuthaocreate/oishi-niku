@@ -66,7 +66,7 @@ export function CartDrawer() {
             <div className="flex items-center justify-between p-6 border-b border-border">
               <div className="flex items-center gap-3">
                 <ShoppingBag className="w-5 h-5 text-primary" />
-                <h2 className="font-heading text-2xl tracking-wide text-foreground">YOUR CART</h2>
+                <h2 className="font-heading text-2xl tracking-wide text-foreground">カート</h2>
                 <AnimatePresence mode="wait">
                   {count > 0 && (
                     <motion.span
@@ -86,7 +86,7 @@ export function CartDrawer() {
                 whileTap={{ scale: 0.95 }}
                 onClick={closeCart}
                 className="p-2 hover:bg-secondary rounded-full transition-colors"
-                aria-label="Close cart"
+                aria-label="カートを閉じる"
               >
                 <X className="w-5 h-5" />
               </motion.button>
@@ -97,10 +97,10 @@ export function CartDrawer() {
               <div className="px-6 py-3 bg-secondary/50 border-b border-border">
                 {remaining > 0 ? (
                   <p className="text-xs text-muted-foreground mb-1.5">
-                    Add <span className="text-primary font-semibold">{formatPrice(remaining)}</span> more for free shipping!
+                    あと <span className="text-primary font-semibold">{formatPrice(remaining)}</span> で送料無料！
                   </p>
                 ) : (
-                  <p className="text-xs text-primary font-semibold mb-1.5">You qualify for free shipping!</p>
+                  <p className="text-xs text-primary font-semibold mb-1.5">送料無料の対象です！</p>
                 )}
                 <div className="h-1.5 bg-border rounded-full overflow-hidden">
                   <motion.div
@@ -122,9 +122,9 @@ export function CartDrawer() {
                   className="flex flex-col items-center justify-center h-full text-center"
                 >
                   <ShoppingBag className="w-20 h-20 text-muted-foreground/30 mb-6" />
-                  <p className="text-muted-foreground text-lg mb-6">Your cart is empty</p>
+                  <p className="text-muted-foreground text-lg mb-6">カートは空です</p>
                   <Button onClick={closeCart} asChild>
-                    <Link href="/products">Shop Now</Link>
+                    <Link href="/products">今すぐ購入</Link>
                   </Button>
                 </motion.div>
               ) : (
@@ -166,7 +166,7 @@ export function CartDrawer() {
                               whileTap={{ scale: 0.95 }}
                               onClick={() => removeItem(item.id)}
                               className="p-1.5 rounded-md hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
-                              aria-label="Remove item"
+                              aria-label="削除"
                             >
                               <Trash2 className="w-4 h-4" />
                             </motion.button>
@@ -220,22 +220,22 @@ export function CartDrawer() {
                   className="p-6 border-t border-border space-y-4 bg-card"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-muted-foreground">小計</span>
                     <span className="text-xl font-semibold text-foreground">{formatPrice(subtotal)}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Shipping and taxes calculated at checkout.</p>
+                  <p className="text-xs text-muted-foreground">送料・税金はチェックアウト時に計算されます。</p>
                   <Button
                     asChild
                     className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-heading text-lg tracking-wider gap-2"
                     size="lg"
                   >
                     <Link href="/checkout" onClick={closeCart}>
-                      CHECKOUT
+                      お会計
                       <ArrowRight className="w-5 h-5" />
                     </Link>
                   </Button>
                   <button onClick={closeCart} className="w-full text-center text-sm text-muted-foreground hover:text-foreground transition-colors py-2">
-                    Continue Shopping
+                    ショッピングを続ける
                   </button>
                 </motion.div>
               )}

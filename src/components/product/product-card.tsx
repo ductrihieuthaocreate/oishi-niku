@@ -60,17 +60,17 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             {isOutOfStock && (
               <span className="bg-destructive text-destructive-foreground text-xs font-semibold px-2 py-1 rounded-full">
-                Sold Out
+                完売
               </span>
             )}
             {!isOutOfStock && product.sales_count >= 100 && (
               <span className="bg-primary text-primary-foreground text-xs font-semibold px-2 py-1 rounded-full">
-                Popular
+                人気
               </span>
             )}
             {product.is_featured && !isOutOfStock && (
               <span className="bg-secondary/90 text-foreground text-xs font-semibold px-2 py-1 rounded-full border border-border">
-                Featured
+                おすすめ
               </span>
             )}
           </div>
@@ -85,7 +85,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               className="absolute bottom-2 left-2 right-2 bg-primary text-primary-foreground font-heading tracking-wider text-sm py-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2"
             >
               <ShoppingBag className="w-4 h-4" />
-              QUICK ADD
+              クイック追加
             </motion.button>
           )}
         </div>

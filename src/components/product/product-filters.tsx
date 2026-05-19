@@ -46,7 +46,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
           <SelectValue placeholder="Category" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All Categories</SelectItem>
+          <SelectItem value="all">すべてのカテゴリー</SelectItem>
           {categories.map(cat => (
             <SelectItem key={cat.id} value={cat.slug}>{cat.name}</SelectItem>
           ))}
@@ -64,10 +64,10 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="newest">Newest First</SelectItem>
-          <SelectItem value="popular">Most Popular</SelectItem>
-          <SelectItem value="price_asc">Price: Low to High</SelectItem>
-          <SelectItem value="price_desc">Price: High to Low</SelectItem>
+          <SelectItem value="newest">新着順</SelectItem>
+          <SelectItem value="popular">人気順</SelectItem>
+          <SelectItem value="price_asc">価格: 安い順</SelectItem>
+          <SelectItem value="price_desc">価格: 高い順</SelectItem>
         </SelectContent>
       </Select>
     </div>

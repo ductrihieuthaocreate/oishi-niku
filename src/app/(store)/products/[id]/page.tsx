@@ -84,7 +84,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <div className="flex items-center gap-4">
             <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
             {product.weight_grams && (
-              <span className="text-muted-foreground">per {product.weight_grams}g</span>
+              <span className="text-muted-foreground">{product.weight_grams}g あたり</span>
             )}
           </div>
 
@@ -93,7 +93,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg border border-border/50">
                 <Award className="w-4 h-4 text-primary flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Grade</p>
+                  <p className="text-xs text-muted-foreground">グレード</p>
                   <p className="font-medium text-sm">{product.grade}</p>
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg border border-border/50">
                 <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Origin</p>
+                  <p className="text-xs text-muted-foreground">産地</p>
                   <p className="font-medium text-sm">{product.origin}</p>
                 </div>
               </div>
@@ -111,7 +111,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg border border-border/50">
                 <Star className="w-4 h-4 text-primary flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Cut</p>
+                  <p className="text-xs text-muted-foreground">部位</p>
                   <p className="font-medium text-sm">{product.cut_type}</p>
                 </div>
               </div>
@@ -120,7 +120,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg border border-border/50">
                 <Weight className="w-4 h-4 text-primary flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Weight</p>
+                  <p className="text-xs text-muted-foreground">重量</p>
                   <p className="font-medium text-sm">{product.weight_grams}g</p>
                 </div>
               </div>
@@ -130,7 +130,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full ${isOutOfStock ? 'bg-destructive' : 'bg-green-500'}`} />
             <span className={`text-sm ${isOutOfStock ? 'text-destructive' : 'text-green-500'}`}>
-              {isOutOfStock ? 'Out of Stock' : `In Stock (${product.stock} available)`}
+              {isOutOfStock ? '在庫切れ' : `在庫あり（${product.stock}点）`}
             </span>
           </div>
 
@@ -138,7 +138,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
           {product.description && (
             <div>
-              <h3 className="font-heading tracking-wider text-foreground mb-3">ABOUT THIS PRODUCT</h3>
+              <h3 className="font-heading tracking-wider text-foreground mb-3">商品について</h3>
               <p className="text-muted-foreground leading-relaxed">{product.description}</p>
             </div>
           )}
@@ -148,9 +148,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <AddToCartButton product={product} />
 
           <div className="flex flex-wrap gap-2 pt-2">
-            <Badge variant="outline" className="text-xs">Cold chain delivery</Badge>
-            <Badge variant="outline" className="text-xs">HACCP certified</Badge>
-            <Badge variant="outline" className="text-xs">Vacuum sealed</Badge>
+            <Badge variant="outline" className="text-xs">コールドチェーン配送</Badge>
+            <Badge variant="outline" className="text-xs">HACCP認証取得</Badge>
+            <Badge variant="outline" className="text-xs">真空パック</Badge>
           </div>
         </div>
       </div>
@@ -158,7 +158,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       {related.length > 0 && (
         <section className="mt-24">
           <div className="flex items-end justify-between mb-8">
-            <h2 className="font-heading text-3xl tracking-wider text-foreground">YOU MIGHT ALSO LIKE</h2>
+            <h2 className="font-heading text-3xl tracking-wider text-foreground">こちらもおすすめ</h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             {related.map(p => (

@@ -17,16 +17,16 @@ const jost = Jost({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Oishi Niku — Premium Meat',
+    default: 'Oishi Niku — プレミアム精肉',
     template: '%s | Oishi Niku',
   },
-  description: 'Premium quality meats sourced from the finest farms. Wagyu, Pork, Chicken & more delivered fresh.',
+  description: '最高品質の農場から厳選した精肉。和牛、豚肉、鶏肉など、新鮮なままお届けします。',
   icons: { icon: '/meat.png' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bebasNeue.variable} ${jost.variable} bg-background`}>
+    <html lang="ja" className={`${bebasNeue.variable} ${jost.variable} bg-background`}>
       <body className="font-sans antialiased">
         {children}
         <Toaster />

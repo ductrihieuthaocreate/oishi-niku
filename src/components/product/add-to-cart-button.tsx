@@ -37,7 +37,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
           onClick={() => setQty(q => Math.max(1, q - 1))}
           disabled={isOutOfStock}
           className="w-9 h-9 rounded-md flex items-center justify-center hover:bg-background transition-colors disabled:opacity-50"
-          aria-label="Decrease quantity"
+          aria-label="数量を減らす"
         >
           <Minus className="w-4 h-4" />
         </motion.button>
@@ -48,7 +48,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
           onClick={() => setQty(q => Math.min(product.stock, q + 1))}
           disabled={isOutOfStock}
           className="w-9 h-9 rounded-md flex items-center justify-center hover:bg-background transition-colors disabled:opacity-50"
-          aria-label="Increase quantity"
+          aria-label="数量を増やす"
         >
           <Plus className="w-4 h-4" />
         </motion.button>
@@ -61,7 +61,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
         className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-heading text-lg tracking-wider gap-2"
       >
         <ShoppingBag className="w-5 h-5" />
-        {isOutOfStock ? 'OUT OF STOCK' : 'ADD TO CART'}
+        {isOutOfStock ? '在庫切れ' : 'カートに追加'}
       </Button>
     </div>
   )

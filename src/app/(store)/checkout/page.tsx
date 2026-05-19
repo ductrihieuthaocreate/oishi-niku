@@ -48,7 +48,7 @@ export default function CheckoutPage() {
     e.preventDefault()
     setError('')
     if (!form.name || !form.email || !form.address || !form.city || !form.postal) {
-      setError('Please fill in all required fields.')
+      setError('必須項目をすべて入力してください。')
       return
     }
     setIsLoading(true)
@@ -61,7 +61,7 @@ export default function CheckoutPage() {
         clearCart()
       }
     } catch {
-      setError('Something went wrong. Please try again.')
+      setError('エラーが発生しました。もう一度お試しください。')
     } finally {
       setIsLoading(false)
     }
@@ -74,14 +74,14 @@ export default function CheckoutPage() {
           <CheckCircle className="w-20 h-20 text-primary mx-auto mb-6" />
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-          <h1 className="font-heading text-4xl tracking-wider text-foreground mb-4">ORDER PLACED!</h1>
-          <p className="text-muted-foreground mb-2">Order #{orderId}</p>
+          <h1 className="font-heading text-4xl tracking-wider text-foreground mb-4">ご注文完了！</h1>
+          <p className="text-muted-foreground mb-2">注文番号 #{orderId}</p>
           <p className="text-muted-foreground mb-8">
-            Thank you for your order! We've sent a confirmation to {form.email}. Your fresh cuts will be on their way soon.
+            ご注文ありがとうございます！{form.email} に確認メールをお送りしました。商品は近日中に発送いたします。
           </p>
           <div className="flex flex-col gap-3">
             <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading tracking-wider">
-              <Link href="/products">CONTINUE SHOPPING</Link>
+              <Link href="/products">ショッピングを続ける</Link>
             </Button>
           </div>
         </motion.div>
@@ -93,9 +93,9 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-lg mx-auto px-4 py-24 text-center">
         <ShoppingBag className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
-        <h1 className="font-heading text-3xl tracking-wider mb-4">YOUR CART IS EMPTY</h1>
+        <h1 className="font-heading text-3xl tracking-wider mb-4">カートは空です</h1>
         <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
-          <Link href="/products">Shop Now</Link>
+          <Link href="/products">今すぐ購入</Link>
         </Button>
       </div>
     )
@@ -104,10 +104,10 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Link href="/products" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
-        <ArrowLeft className="w-4 h-4" /> Back to Shopping
+        <ArrowLeft className="w-4 h-4" /> ショッピングに戻る
       </Link>
 
-      <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl tracking-wider text-foreground mb-6 lg:mb-10">CHECKOUT</h1>
+      <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl tracking-wider text-foreground mb-6 lg:mb-10">お会計</h1>
 
       <form onSubmit={handleSubmit}>
         <div className="grid lg:grid-cols-3 gap-6 lg:gap-12">
@@ -115,19 +115,19 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2 space-y-5 lg:space-y-8 order-2 lg:order-1">
             {/* Contact */}
             <div className="bg-card border border-border rounded-xl p-6">
-              <h2 className="font-heading text-xl tracking-wider text-foreground mb-6">CONTACT INFORMATION</h2>
+              <h2 className="font-heading text-xl tracking-wider text-foreground mb-6">お客様情報</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2">
-                  <Label htmlFor="name">Full Name *</Label>
-                  <Input id="name" name="name" value={form.name} onChange={handleChange} required className="mt-1.5" placeholder="John Smith" />
+                  <Label htmlFor="name">氏名 *</Label>
+                  <Input id="name" name="name" value={form.name} onChange={handleChange} required className="mt-1.5" placeholder="山田 太郎" />
                 </div>
                 <div>
-                  <Label htmlFor="email">Email *</Label>
-                  <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} required className="mt-1.5" placeholder="john@example.com" />
+                  <Label htmlFor="email">メールアドレス *</Label>
+                  <Input id="email" name="email" type="email" value={form.email} onChange={handleChange} required className="mt-1.5" placeholder="taro@example.com" />
                 </div>
                 <div>
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} className="mt-1.5" placeholder="+1 (555) 000-0000" />
+                  <Label htmlFor="phone">電話番号</Label>
+                  <Input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} className="mt-1.5" placeholder="090-0000-0000" />
                 </div>
               </div>
             </div>
@@ -135,19 +135,19 @@ export default function CheckoutPage() {
             {/* Shipping Address */}
             <div className="bg-card border border-border rounded-xl p-6">
               <h2 className="font-heading text-xl tracking-wider text-foreground mb-6 flex items-center gap-2">
-                <Truck className="w-5 h-5 text-primary" /> SHIPPING ADDRESS
+                <Truck className="w-5 h-5 text-primary" /> お届け先住所
               </h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2">
-                  <Label htmlFor="address">Street Address *</Label>
-                  <Input id="address" name="address" value={form.address} onChange={handleChange} required className="mt-1.5" placeholder="123 Main St, Apt 4B" />
+                  <Label htmlFor="address">住所 *</Label>
+                  <Input id="address" name="address" value={form.address} onChange={handleChange} required className="mt-1.5" placeholder="東京都渋谷区1-2-3" />
                 </div>
                 <div>
-                  <Label htmlFor="city">City *</Label>
-                  <Input id="city" name="city" value={form.city} onChange={handleChange} required className="mt-1.5" placeholder="Los Angeles" />
+                  <Label htmlFor="city">市区町村 *</Label>
+                  <Input id="city" name="city" value={form.city} onChange={handleChange} required className="mt-1.5" placeholder="渋谷区" />
                 </div>
                 <div>
-                  <Label htmlFor="state">State</Label>
+                  <Label htmlFor="state">都道府県</Label>
                   <select
                     id="state"
                     name="state"
@@ -159,22 +159,22 @@ export default function CheckoutPage() {
                   </select>
                 </div>
                 <div>
-                  <Label htmlFor="postal">ZIP Code *</Label>
-                  <Input id="postal" name="postal" value={form.postal} onChange={handleChange} required className="mt-1.5" placeholder="90001" />
+                  <Label htmlFor="postal">郵便番号 *</Label>
+                  <Input id="postal" name="postal" value={form.postal} onChange={handleChange} required className="mt-1.5" placeholder="150-0001" />
                 </div>
                 <div>
-                  <Label htmlFor="country">Country</Label>
+                  <Label htmlFor="country">国</Label>
                   <Input id="country" name="country" value={form.country} onChange={handleChange} className="mt-1.5" disabled />
                 </div>
                 <div className="sm:col-span-2">
-                  <Label htmlFor="notes">Order Notes (optional)</Label>
+                  <Label htmlFor="notes">備考（任意）</Label>
                   <textarea
                     id="notes"
                     name="notes"
                     value={form.notes}
                     onChange={handleChange}
                     rows={3}
-                    placeholder="Special instructions, preferred delivery time..."
+                    placeholder="特別な指示、希望配達時間など..."
                     className="mt-1.5 flex min-h-[80px] w-full rounded-md border border-border bg-input px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   />
                 </div>
@@ -184,13 +184,13 @@ export default function CheckoutPage() {
             {/* Payment */}
             <div className="bg-card border border-border rounded-xl p-6">
               <h2 className="font-heading text-xl tracking-wider text-foreground mb-6 flex items-center gap-2">
-                <CreditCard className="w-5 h-5 text-primary" /> PAYMENT METHOD
+                <CreditCard className="w-5 h-5 text-primary" /> 支払い方法
               </h2>
               <div className="space-y-3">
                 {([
-                  { value: 'card', label: 'Credit / Debit Card', desc: 'Pay securely with your card' },
-                  { value: 'bank', label: 'Bank Transfer', desc: 'Transfer funds directly to our account' },
-                  { value: 'cod', label: 'Cash on Delivery', desc: 'Pay when your order arrives' },
+                  { value: 'card', label: 'クレジット / デビットカード', desc: 'カードで安全にお支払い' },
+                  { value: 'bank', label: '銀行振込', desc: '直接口座にお振込みください' },
+                  { value: 'cod', label: '代金引換', desc: '商品到着時にお支払い' },
                 ] as const).map(opt => (
                   <label
                     key={opt.value}
@@ -216,15 +216,15 @@ export default function CheckoutPage() {
 
               {paymentMethod === 'card' && (
                 <div className="mt-4 p-4 bg-secondary/50 rounded-lg border border-dashed border-border">
-                  <p className="text-sm text-muted-foreground text-center">Stripe payment form would be integrated here</p>
+                  <p className="text-sm text-muted-foreground text-center">カード決済フォームはこちらに統合されます</p>
                 </div>
               )}
               {paymentMethod === 'bank' && (
                 <div className="mt-4 p-4 bg-secondary/50 rounded-lg border border-border">
-                  <p className="text-sm font-medium mb-2">Bank Transfer Details:</p>
-                  <p className="text-sm text-muted-foreground">Bank: First National Bank</p>
-                  <p className="text-sm text-muted-foreground">Account: 123-456-7890</p>
-                  <p className="text-sm text-muted-foreground">Reference: Your order number (provided after checkout)</p>
+                  <p className="text-sm font-medium mb-2">銀行振込の詳細：</p>
+                  <p className="text-sm text-muted-foreground">銀行: ファーストナショナル銀行</p>
+                  <p className="text-sm text-muted-foreground">口座番号: 123-456-7890</p>
+                  <p className="text-sm text-muted-foreground">振込名義: ご注文番号（注文後にお知らせします）</p>
                 </div>
               )}
             </div>
@@ -239,7 +239,7 @@ export default function CheckoutPage() {
           {/* Right — Order Summary */}
           <div className="space-y-4 order-1 lg:order-2">
             <div className="bg-card border border-border rounded-xl p-4 sm:p-6 lg:sticky lg:top-24">
-              <h2 className="font-heading text-xl tracking-wider text-foreground mb-6">ORDER SUMMARY</h2>
+              <h2 className="font-heading text-xl tracking-wider text-foreground mb-6">注文内容</h2>
 
               <div className="space-y-3 mb-6">
                 {items.map(item => (
@@ -255,7 +255,7 @@ export default function CheckoutPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{item.name}</p>
-                      <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
+                      <p className="text-xs text-muted-foreground">数量: {item.quantity}</p>
                     </div>
                     <span className="text-sm font-medium text-primary">{formatPrice(item.price * item.quantity)}</span>
                   </div>
@@ -266,15 +266,15 @@ export default function CheckoutPage() {
 
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="text-muted-foreground">小計</span>
                   <span>{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Shipping</span>
-                  <span>{shippingFee === 0 ? <span className="text-primary">FREE</span> : formatPrice(shippingFee)}</span>
+                  <span className="text-muted-foreground">送料</span>
+                  <span>{shippingFee === 0 ? <span className="text-primary">無料</span> : formatPrice(shippingFee)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Tax (10%)</span>
+                  <span className="text-muted-foreground">消費税（10%）</span>
                   <span>{formatPrice(tax)}</span>
                 </div>
               </div>
@@ -282,7 +282,7 @@ export default function CheckoutPage() {
               <Separator className="mb-4" />
 
               <div className="flex justify-between mb-6">
-                <span className="font-heading tracking-wider text-foreground">TOTAL</span>
+                <span className="font-heading tracking-wider text-foreground">合計</span>
                 <span className="text-xl font-bold text-primary">{formatPrice(total)}</span>
               </div>
 
@@ -293,11 +293,11 @@ export default function CheckoutPage() {
                 size="lg"
               >
                 <Lock className="w-5 h-5" />
-                {isLoading ? 'PLACING ORDER...' : 'PLACE ORDER'}
+                {isLoading ? '注文中...' : '注文する'}
               </Button>
 
               <p className="text-xs text-muted-foreground text-center mt-3 flex items-center justify-center gap-1">
-                <Lock className="w-3 h-3" /> Secure checkout
+                <Lock className="w-3 h-3" /> 安全なチェックアウト
               </p>
             </div>
           </div>

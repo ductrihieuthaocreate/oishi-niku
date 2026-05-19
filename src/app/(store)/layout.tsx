@@ -4,8 +4,8 @@ import { Footer } from '@/components/layout/footer'
 import { CartDrawer } from '@/components/cart/cart-drawer'
 
 const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Shop', href: '/products' },
+  { label: 'ホーム', href: '/' },
+  { label: 'ショップ', href: '/products' },
 ]
 
 export default function StoreLayout({ children }: { children: React.ReactNode }) {
