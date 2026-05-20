@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { sql } from '@/lib/db'
+import { getLang, dict } from '@/lib/lang'
 import { ProductGallery } from '@/components/product/product-gallery'
 
 export const dynamic = 'force-dynamic'
@@ -63,9 +64,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProductDetailPage({ params }: PageProps) {
   const { id } = await params
-  const product = await getProduct(id)
+  const [product, lang] = await Promise.all([getProduct(id), getLang()])
   if (!product) notFound()
 
+  const t = dict[lang]
+  const pd = t.product
   const related = await getRelatedProducts(product.category_id, product.id)
   const allImages = product.images?.length > 0 ? product.images : (product.image_url ? [product.image_url] : [])
   const isOutOfStock = product.stock <= 0
@@ -84,7 +87,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <div className="flex items-center gap-4">
             <span className="text-3xl font-bold text-primary">{formatPrice(product.price)}</span>
             {product.weight_grams && (
-              <span className="text-muted-foreground">{product.weight_grams}g あたり</span>
+              <span className="text-muted-foreground">{product.weight_grams}g {pd.per}</span>
             )}
           </div>
 
@@ -93,7 +96,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg border border-border/50">
                 <Award className="w-4 h-4 text-primary flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">グレード</p>
+                  <p className="text-xs text-muted-foreground">{pd.grade}</p>
                   <p className="font-medium text-sm">{product.grade}</p>
                 </div>
               </div>
@@ -102,7 +105,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg border border-border/50">
                 <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">産地</p>
+                  <p className="text-xs text-muted-foreground">{pd.origin}</p>
                   <p className="font-medium text-sm">{product.origin}</p>
                 </div>
               </div>
@@ -111,7 +114,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg border border-border/50">
                 <Star className="w-4 h-4 text-primary flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">部位</p>
+                  <p className="text-xs text-muted-foreground">{pd.cutType}</p>
                   <p className="font-medium text-sm">{product.cut_type}</p>
                 </div>
               </div>
@@ -120,7 +123,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg border border-border/50">
                 <Weight className="w-4 h-4 text-primary flex-shrink-0" />
                 <div>
-                  <p className="text-xs text-muted-foreground">重量</p>
+                  <p className="text-xs text-muted-foreground">{pd.weight}</p>
                   <p className="font-medium text-sm">{product.weight_grams}g</p>
                 </div>
               </div>
@@ -130,7 +133,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <div className="flex items-center gap-2">
             <div className={`w-2 h-2 rounded-full ${isOutOfStock ? 'bg-destructive' : 'bg-green-500'}`} />
             <span className={`text-sm ${isOutOfStock ? 'text-destructive' : 'text-green-500'}`}>
-              {isOutOfStock ? '在庫切れ' : `在庫あり（${product.stock}点）`}
+              {isOutOfStock ? pd.outOfStock : `${pd.inStockBefore}${product.stock}${pd.inStockAfter}`}
             </span>
           </div>
 
@@ -138,7 +141,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
           {product.description && (
             <div>
-              <h3 className="font-heading tracking-wider text-foreground mb-3">商品について</h3>
+              <h3 className="font-heading tracking-wider text-foreground mb-3">{pd.about}</h3>
               <p className="text-muted-foreground leading-relaxed">{product.description}</p>
             </div>
           )}
@@ -148,9 +151,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <AddToCartButton product={product} />
 
           <div className="flex flex-wrap gap-2 pt-2">
-            <Badge variant="outline" className="text-xs">コールドチェーン配送</Badge>
-            <Badge variant="outline" className="text-xs">HACCP認証取得</Badge>
-            <Badge variant="outline" className="text-xs">真空パック</Badge>
+            <Badge variant="outline" className="text-xs">{pd.badgeColdChain}</Badge>
+            <Badge variant="outline" className="text-xs">{pd.badgeHaccp}</Badge>
+            <Badge variant="outline" className="text-xs">{pd.badgeVacuum}</Badge>
           </div>
         </div>
       </div>
@@ -158,7 +161,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       {related.length > 0 && (
         <section className="mt-24">
           <div className="flex items-end justify-between mb-8">
-            <h2 className="font-heading text-3xl tracking-wider text-foreground">こちらもおすすめ</h2>
+            <h2 className="font-heading text-3xl tracking-wider text-foreground">{pd.related}</h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             {related.map(p => (

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Minus, Plus, ShoppingBag } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useCart } from '@/lib/cart-context'
+import { useLang } from '@/lib/lang-context'
 import { Button } from '@/components/ui/button'
 import type { Product } from '@/lib/types'
 import { toast } from 'sonner'
@@ -15,6 +16,7 @@ interface AddToCartButtonProps {
 export function AddToCartButton({ product }: AddToCartButtonProps) {
   const [qty, setQty] = useState(1)
   const { addItem } = useCart()
+  const { t } = useLang()
   const isOutOfStock = product.stock <= 0
 
   const handleAdd = () => {
@@ -61,7 +63,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
         className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 font-heading text-lg tracking-wider gap-2"
       >
         <ShoppingBag className="w-5 h-5" />
-        {isOutOfStock ? '在庫切れ' : 'カートに追加'}
+        {isOutOfStock ? t.product.outOfStock : t.product.addToCart}
       </Button>
     </div>
   )

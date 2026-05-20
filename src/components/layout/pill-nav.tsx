@@ -7,6 +7,7 @@ import { gsap } from 'gsap'
 import { ShoppingBag } from 'lucide-react'
 import { useCart } from '@/lib/cart-context'
 import { Logo } from '@/components/logo'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 interface NavItem {
   label: string
@@ -197,6 +198,7 @@ export function PillNav({ items, className = '' }: PillNavProps) {
 
         {/* Right Actions */}
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <button
             onClick={toggleCart}
             className="w-[var(--nav-h)] h-[var(--nav-h)] rounded-full border-none inline-flex items-center justify-center cursor-pointer relative transition-transform duration-200 hover:scale-105"

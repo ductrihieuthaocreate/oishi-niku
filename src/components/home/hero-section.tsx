@@ -6,15 +6,13 @@ import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-
-const MARQUEE_WORDS = [
-  '冷凍', '大口注文', 'B2B', '卸売', '牛肉', '豚肉', '鶏肉',
-  '冷凍供給', '信頼性', 'バルクカット', 'コールドチェーン', 'OISHI NIKU',
-]
+import { useLang } from '@/lib/lang-context'
 
 export function HeroSection() {
   const marqueeRef = useRef<HTMLDivElement>(null)
   const marquee2Ref = useRef<HTMLDivElement>(null)
+  const { t } = useLang()
+  const words = [...t.hero.marquee, ...t.hero.marquee]
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -37,17 +35,15 @@ export function HeroSection() {
     return () => ctx.revert()
   }, [])
 
-  const words = [...MARQUEE_WORDS, ...MARQUEE_WORDS]
-
   return (
-    <section className="relative min-h-[85vh] flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-[55vh] lg:min-h-[85vh] flex flex-col justify-center overflow-hidden">
       {/* Background grid */}
       <div className="absolute inset-0 opacity-60" style={{
         backgroundImage: 'linear-gradient(#E5E3DC 1px, transparent 1px), linear-gradient(90deg, #E5E3DC 1px, transparent 1px)',
         backgroundSize: '60px 60px',
       }} />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-24 relative z-10">
         <div className="max-w-4xl">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -55,27 +51,27 @@ export function HeroSection() {
             transition={{ delay: 0.1 }}
             className="text-primary font-medium tracking-widest uppercase mb-4 text-xs sm:text-sm"
           >
-            冷凍肉卸売業者
+            {t.hero.eyebrow}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="font-heading text-[2.8rem] sm:text-6xl lg:text-9xl tracking-wider text-foreground mb-5 lg:mb-8 leading-none"
+            className="font-heading text-[2rem] sm:text-6xl lg:text-9xl tracking-wider text-foreground mb-3 lg:mb-8 leading-none"
           >
-            冷凍肉
+            {t.hero.title1}
             <br />
-            <span className="text-primary">大量仕入れ</span>
+            <span className="text-primary">{t.hero.title2}</span>
             <br />
-            安定供給
+            {t.hero.title3}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-sm sm:text-lg text-muted-foreground max-w-xl mb-8"
+            className="text-sm sm:text-lg text-muted-foreground max-w-xl mb-5 lg:mb-8"
           >
-            レストラン、ホテル、食品事業者向けの信頼できる冷凍肉供給。一貫した品質、競争力のある大口価格、確かなコールドチェーン配送。
+            {t.hero.subtitle}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -85,7 +81,7 @@ export function HeroSection() {
           >
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading text-lg tracking-wider gap-2">
               <Link href="/products">
-                商品カタログを見る
+                {t.hero.cta}
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
@@ -94,7 +90,7 @@ export function HeroSection() {
       </div>
 
       {/* Scroll velocity marquee */}
-      <div className="border-y border-border py-4 overflow-hidden mt-8">
+      <div className="border-y border-border py-3 overflow-hidden mt-4 lg:mt-8">
         <div ref={marqueeRef} className="flex whitespace-nowrap will-change-transform" style={{ width: '200%' }}>
           {words.map((word, i) => (
             <span key={i} className="font-heading text-xl tracking-wider text-muted-foreground/40 mx-6 flex-shrink-0">

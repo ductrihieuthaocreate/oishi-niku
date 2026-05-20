@@ -1,17 +1,17 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, Jost } from 'next/font/google'
+import { Barlow_Condensed, Jost } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const bebasNeue = Bebas_Neue({
-  weight: '400',
-  subsets: ['latin'],
+const barlowCondensed = Barlow_Condensed({
+  weight: ['400', '700'],
+  subsets: ['latin', 'latin-ext'],
   variable: '--font-heading',
 })
 
 const jost = Jost({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   variable: '--font-sans',
 })
 
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${bebasNeue.variable} ${jost.variable} bg-background`}>
+    <html lang="ja" className={`${barlowCondensed.variable} ${jost.variable} bg-background`}>
       <body className="font-sans antialiased">
         {children}
         <Toaster />

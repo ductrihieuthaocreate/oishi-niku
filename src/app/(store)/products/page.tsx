@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { sql } from '@/lib/db'
+import { getLang, dict } from '@/lib/lang'
 import { ProductCard } from '@/components/product/product-card'
 import { ProductFilters } from '@/components/product/product-filters'
 import type { Product, Category } from '@/lib/types'
@@ -13,7 +14,9 @@ interface PageProps {
 }
 
 export default async function ProductsPage({ searchParams }: PageProps) {
-  const params = await searchParams
+  const [params, lang] = await Promise.all([searchParams, getLang()])
+  const t = dict[lang]
+  const p = t.products
   const page = parseInt(params.page ?? '1')
   const offset = (page - 1) * PAGE_SIZE
 
@@ -66,9 +69,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-10">
-        <p className="text-primary font-medium tracking-widest uppercase mb-2 text-xs sm:text-sm">商品一覧</p>
-        <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl tracking-wider text-foreground">全商品</h1>
-        <p className="text-muted-foreground mt-2">{total}件の商品</p>
+        <p className="text-primary font-medium tracking-widest uppercase mb-2 text-xs sm:text-sm">{p.eyebrow}</p>
+        <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl tracking-wider text-foreground">{p.title}</h1>
+        <p className="text-muted-foreground mt-2">{p.countBefore}{total}{p.countAfter}</p>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
@@ -87,17 +90,17 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
           {totalPages > 1 && (
             <div className="mt-12 flex items-center justify-center gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(pg => (
                 <a
-                  key={p}
-                  href={`?${new URLSearchParams({ ...params, page: String(p) })}`}
+                  key={pg}
+                  href={`?${new URLSearchParams({ ...params, page: String(pg) })}`}
                   className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-medium transition-colors ${
-                    p === page
+                    pg === page
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-secondary hover:bg-secondary/80 text-foreground border border-border'
                   }`}
                 >
-                  {p}
+                  {pg}
                 </a>
               ))}
             </div>
@@ -105,8 +108,8 @@ export default async function ProductsPage({ searchParams }: PageProps) {
         </>
       ) : (
         <div className="text-center py-24 border border-dashed border-border rounded-xl">
-          <p className="text-muted-foreground text-xl mb-2">商品が見つかりません</p>
-          <p className="text-sm text-muted-foreground">フィルターまたは検索キーワードを変更してください。</p>
+          <p className="text-muted-foreground text-xl mb-2">{p.notFound}</p>
+          <p className="text-sm text-muted-foreground">{p.notFoundDesc}</p>
         </div>
       )}
     </div>
