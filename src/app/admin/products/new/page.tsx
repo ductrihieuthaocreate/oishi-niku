@@ -4,6 +4,7 @@ import { createProduct } from '../actions'
 import type { Category } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 export default async function NewProductPage() {
   const categories = await sql`SELECT * FROM categories ORDER BY name`

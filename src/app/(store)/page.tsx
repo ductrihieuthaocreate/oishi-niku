@@ -8,6 +8,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/
 import type { Product } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 const faqs = [
   {

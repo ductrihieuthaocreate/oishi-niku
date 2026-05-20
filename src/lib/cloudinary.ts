@@ -1,39 +1,41 @@
-import { v2 as cloudinary } from 'cloudinary'
+async function sha1(message: string): Promise<string> {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(message)
+  const hashBuffer = await crypto.subtle.digest('SHA-1', data)
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('')
+}
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+export async function uploadProductImage(file: File): Promise<string> {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME!
+  const apiKey = process.env.CLOUDINARY_API_KEY!
+  const apiSecret = process.env.CLOUDINARY_API_SECRET!
 
-export { cloudinary }
+  const timestamp = Math.floor(Date.now() / 1000).toString()
+  const folder = 'oishi-niku/products'
+  const toSign = `folder=${folder}&timestamp=${timestamp}${apiSecret}`
+  const signature = await sha1(toSign)
 
-export async function uploadProductImage(
-  fileBuffer: Buffer,
-  fileName: string
-): Promise<string> {
-  return new Promise((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream(
-        {
-          folder: 'oishi-niku/products',
-          public_id: fileName.replace(/\.[^/.]+$/, ''),
-          overwrite: true,
-          resource_type: 'image',
-          transformation: [
-            { width: 1200, height: 1200, crop: 'limit', quality: 'auto:good' },
-          ],
-        },
-        (error, result) => {
-          if (error || !result) {
-            reject(error ?? new Error('Upload failed'))
-          } else {
-            resolve(result.secure_url)
-          }
-        }
-      )
-      .end(fileBuffer)
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('api_key', apiKey)
+  formData.append('timestamp', timestamp)
+  formData.append('signature', signature)
+  formData.append('folder', folder)
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: 'POST',
+    body: formData,
   })
+
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(`Cloudinary upload failed: ${err}`)
+  }
+
+  const data = await res.json() as { secure_url: string }
+  return data.secure_url
 }
 
 export function getOptimizedUrl(url: string, width = 800, height = 800): string {

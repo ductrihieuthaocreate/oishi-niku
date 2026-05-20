@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { sql } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 const SEED_KEY = 'oishi-seed-2024'
 
