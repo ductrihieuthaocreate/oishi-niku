@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import { Bebas_Neue, Jost } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
-
-export const runtime = 'edge'
 
 const bebasNeue = Bebas_Neue({
   weight: '400',
@@ -31,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans antialiased">
         {children}
         <Toaster />
+        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )

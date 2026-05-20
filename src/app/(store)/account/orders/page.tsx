@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import { Package } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
 
 export default function OrdersPage() {
   return (

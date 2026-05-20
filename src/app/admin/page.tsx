@@ -8,7 +8,6 @@ import {
 import type { Order, Product } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
 
 async function getDashboardData() {
   const [

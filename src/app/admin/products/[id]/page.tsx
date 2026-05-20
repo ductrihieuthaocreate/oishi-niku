@@ -3,7 +3,6 @@ import { sql } from '@/lib/db'
 import { ProductForm } from '../product-form'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
 import { updateProduct } from '../actions'
 import type { Product, Category } from '@/lib/types'
 

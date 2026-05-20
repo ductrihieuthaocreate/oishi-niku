@@ -5,7 +5,6 @@ import { ShoppingCart } from 'lucide-react'
 import type { Order } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
 
 interface PageProps {
   searchParams: Promise<{ status?: string; q?: string }>

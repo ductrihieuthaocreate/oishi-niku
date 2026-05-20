@@ -5,7 +5,6 @@ import { ProductFilters } from '@/components/product/product-filters'
 import type { Product, Category } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
 
 const PAGE_SIZE = 24
 

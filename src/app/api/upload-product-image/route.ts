@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { uploadProductImage } from '@/lib/cloudinary'
 
-export const runtime = 'edge'
-
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()

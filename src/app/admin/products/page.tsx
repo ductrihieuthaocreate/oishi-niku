@@ -7,7 +7,6 @@ import { DeleteProductButton } from './delete-button'
 import type { Product, Category } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
 
 interface PageProps {
   searchParams: Promise<{ q?: string; category?: string; status?: string }>

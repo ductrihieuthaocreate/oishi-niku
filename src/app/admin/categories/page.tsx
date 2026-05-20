@@ -2,7 +2,6 @@ import { sql } from '@/lib/db'
 import { CategoryManager } from './category-manager'
 
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
 
 export default async function AdminCategoriesPage() {
   const categories = await sql`
