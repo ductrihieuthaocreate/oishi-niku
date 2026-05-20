@@ -1,17 +1,18 @@
 import type { Metadata } from 'next'
-import { Barlow_Condensed, Jost } from 'next/font/google'
+import { Be_Vietnam_Pro } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const barlowCondensed = Barlow_Condensed({
-  weight: ['400', '700'],
-  subsets: ['latin', 'latin-ext'],
+const beVietnamPro = Be_Vietnam_Pro({
+  weight: ['400', '500', '700', '800'],
+  subsets: ['latin', 'vietnamese'],
   variable: '--font-heading',
 })
 
-const jost = Jost({
-  subsets: ['latin', 'latin-ext'],
+const beVietnamProBody = Be_Vietnam_Pro({
+  weight: ['400', '500'],
+  subsets: ['latin', 'vietnamese'],
   variable: '--font-sans',
 })
 
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${barlowCondensed.variable} ${jost.variable} bg-background`}>
+    <html lang="ja" className={`${beVietnamPro.variable} ${beVietnamProBody.variable} bg-background`}>
       <body className="font-sans antialiased">
         {children}
         <Toaster />
