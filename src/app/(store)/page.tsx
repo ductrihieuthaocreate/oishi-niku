@@ -9,13 +9,27 @@ import type { Product } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
-
 const faqs = [
-  { q: '最小注文数量はどのくらいですか？', a: '1商品あたり最小20kgからご注文いただけます。混載パレットの場合、最小注文合計は100kgです。200kg、500kg、1000kgの各基準で数量割引が自動適用されます。' },
-  { q: '冷凍肉の梱包・配送方法は？', a: '全商品は真空パックの上、ドライアイス入りの断熱カートンで梱包されます。倉庫からお届け先まで完全なコールドチェーンを維持し、製品温度が-18℃を超えることはありません。' },
-  { q: '商品はどのような認証を取得していますか？', a: 'サプライチェーン全体がHACCP認証を取得しており、全商品が国際食品安全基準を満たしています。ご要望に応じて、完全なトレーサビリティ証明書、ハラール認証、原産国証明書を提供できます。' },
-  { q: 'レストランやホテル向けのカスタムカットは対応可能ですか？', a: 'はい。定期注文のB2Bクライアント様には、カスタムポーション加工、トリミング、ラベリングに対応しています。仕様要件についてはお気軽にお問い合わせください。' },
-  { q: '支払い・クレジット条件はどうなっていますか？', a: '銀行振込をお受けしており、承認済み法人口座にはNET-30の支払い条件を提供しています。初回注文は前払いが必要です。取引口座の開設については営業チームまでお問い合わせください。' },
+  {
+    q: '最小注文数量はどのくらいですか？',
+    a: '1商品あたり最小20kgからご注文いただけます。混載パレットの場合、最小注文合計は100kgです。200kg、500kg、1000kgの各基準で数量割引が自動適用されます。',
+  },
+  {
+    q: '冷凍肉の梁包・配送方法は？',
+    a: '全商品は真空パックの上、ドライアイス入りの断熱カートンで梁包されます。倉庫からお届け先まで完全なコールドチェーンを維持し、製品温度が-18℃を超えることはありません。',
+  },
+  {
+    q: '商品はどのような認証を取得していますか？',
+    a: 'サプライチェーン全体がHACCP認証を取得しており、全商品が国際食品安全基準を満たしています。ご要望に応じて、完全なトレーサビリティ証明書、ハラール認証、原産国証明書を提供できます。',
+  },
+  {
+    q: 'レストランやホテル向けのカスタムカットは対応可能ですか？',
+    a: 'はい。定期注文のB2Bクライアント様には、カスタムポーション加工、トリミング、ラベリングに対応しています。仕様要件についてはお気軽にお問い合わせください。',
+  },
+  {
+    q: '支払い・クレジット条件はどうなっていますか？',
+    a: '銀行振込をお受けしており、承認済み法人口座にはNET-30の支払い条件を提供しています。初回注文は前払いが必要です。取引口座の開設については営業チームまでお問い合わせください。',
+  },
 ]
 
 async function getFeaturedProducts(): Promise<Product[]> {
@@ -38,16 +52,19 @@ export default async function HomePage() {
     <div className="min-h-screen">
       <HeroSection />
 
-      {/* Featured Products */}
       <section className="py-10 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-7 lg:mb-12">
             <div>
-              <p className="text-primary font-medium tracking-widest uppercase mb-1 text-xs sm:text-sm">商品ラインナップ</p>
-              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl tracking-wider text-foreground">取扱商品</h2>
+              <p className="text-primary font-medium tracking-widest uppercase mb-1 text-xs sm:text-sm">
+                {'商品ラインナップ'}
+              </p>
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl tracking-wider text-foreground">
+                {'取扱商品'}
+              </h2>
             </div>
             <Link href="/products" className="hidden sm:flex items-center gap-2 text-foreground hover:text-primary transition-colors">
-              すべて見る <ArrowRight className="w-4 h-4" />
+              {'すべて見る'} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -59,23 +76,32 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="text-center py-20 border border-dashed border-border rounded-xl">
-              <p className="text-muted-foreground text-lg mb-2">おすすめ商品はまだありません</p>
-              <p className="text-sm text-muted-foreground">管理画面から商品を追加し、おすすめに設定してください。</p>
+              <p className="text-muted-foreground text-lg mb-2">
+                {'おすすめ商品はまだありません'}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {'管理画面から商品を追加し、おすすめに設定してください。'}
+              </p>
             </div>
           )}
 
           <div className="mt-8 text-center sm:hidden">
-            <Button asChild variant="outline"><Link href="/products">すべての商品を見る</Link></Button>
+            <Button asChild variant="outline">
+              <Link href="/products">{'すべての商品を見る'}</Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="py-10 lg:py-24 bg-secondary/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-primary font-medium tracking-widest uppercase mb-4">取引に関するお問い合わせ</p>
-            <h2 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground">よくある質問</h2>
+            <p className="text-primary font-medium tracking-widest uppercase mb-4">
+              {'取引に関するお問い合わせ'}
+            </p>
+            <h2 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground">
+              {'よくある質問'}
+            </h2>
           </div>
           <Accordion type="single" collapsible className="space-y-4" id="faq">
             {faqs.map((faq, i) => (
@@ -94,23 +120,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
       <section className="py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-card border border-border rounded-2xl p-8 lg:p-16 text-center">
-            <p className="text-primary font-medium tracking-widest uppercase mb-4">パートナーになる</p>
-            <h2 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground mb-6">取引口座を開設する</h2>
+            <p className="text-primary font-medium tracking-widest uppercase mb-4">
+              {'パートナーになる'}
+            </p>
+            <h2 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground mb-6">
+              {'取引口座を開設する'}
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              レストラン、ホテル、食品卸業者の方へ — 卸売価格、NET-30 支払条件、専任アカウントマネージャーをご利用いただけます。
+              {'レストラン、ホテル、食品卸業者の方へ — 卸売価格、NET-30 支払条件、専任アカウントマネージャーをご利用いただけます。'}
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
-                placeholder="ビジネスメールアドレスを入力"
+                placeholder={'ビジネスメールアドレスを入力'}
                 className="flex-1 bg-secondary border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading tracking-wider px-8">
-                今すぐ申し込む
+                {'今すぐ申し込む'}
               </Button>
             </form>
           </div>
