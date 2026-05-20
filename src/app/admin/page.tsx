@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import { sql } from '@/lib/db'
 import { formatPrice, formatDate } from '@/lib/utils'
 import {

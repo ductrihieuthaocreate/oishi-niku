@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { sql } from '@/lib/db'
 import { ProductCard } from '@/components/product/product-card'

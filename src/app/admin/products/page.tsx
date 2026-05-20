@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import Image from 'next/image'
 import { sql } from '@/lib/db'
 import { formatPrice } from '@/lib/utils'
