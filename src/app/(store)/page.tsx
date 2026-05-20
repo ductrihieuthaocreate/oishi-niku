@@ -98,9 +98,9 @@ export default async function HomePage() {
       <section className="py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-card border border-border rounded-2xl p-8 lg:p-16 text-center">
-            <p className=”text-primary font-medium tracking-widest uppercase mb-4”>パートナーになる</p>
-            <h2 className=”font-heading text-4xl lg:text-5xl tracking-wider text-foreground mb-6”>取引口座を開設する</h2>
-            <p className=”text-lg text-muted-foreground max-w-2xl mx-auto mb-8”>
+            <p className="text-primary font-medium tracking-widest uppercase mb-4">パートナーになる</p>
+            <h2 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground mb-6">取引口座を開設する</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
               レストラン、ホテル、食品卸業者の方へ — 卸売価格、NET-30 支払条件、専任アカウントマネージャーをご利用いただけます。
             </p>
             <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">

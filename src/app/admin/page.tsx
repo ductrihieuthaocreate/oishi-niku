@@ -167,7 +167,7 @@ export default async function AdminDashboard() {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4 text-primary" />
-              <h2 className="font-heading tracking-wider text-foreground">REVENUE â€” LAST 7 DAYS</h2>
+              <h2 className="font-heading tracking-wider text-foreground">REVENUE â€" LAST 7 DAYS</h2>
             </div>
             <span className="text-xs text-muted-foreground">Daily totals</span>
           </div>

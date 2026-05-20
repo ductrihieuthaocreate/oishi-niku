@@ -158,7 +158,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
                         </div>
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell">
-                        <span className="text-sm text-muted-foreground">{product.categories?.name ?? 'â€”'}</span>
+                        <span className="text-sm text-muted-foreground">{product.categories?.name ?? 'â€"'}</span>
                       </td>
                       <td className="px-4 py-3">
                         <span className="font-semibold text-primary text-sm">{formatPrice(product.price)}</span>
