@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useLang } from '@/lib/lang-context'
-import type { Lang } from '@/lib/lang'
+import type { Lang } from '@/lib/lang-dict'
 
 const LANGS: { code: Lang; label: string }[] = [
   { code: 'ja', label: 'JP' },

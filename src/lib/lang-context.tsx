@@ -1,8 +1,8 @@
 'use client'
 
 import { createContext, useContext } from 'react'
-import type { Lang, Dict } from './lang'
-import { dict } from './lang'
+import type { Lang, Dict } from './lang-dict'
+import { dict } from './lang-dict'
 
 const LangContext = createContext<Lang>('ja')
 
