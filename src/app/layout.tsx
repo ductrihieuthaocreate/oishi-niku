@@ -1,18 +1,25 @@
 import type { Metadata } from 'next'
-import { Be_Vietnam_Pro } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const beVietnamPro = Be_Vietnam_Pro({
-  weight: ['400', '500', '700', '800'],
-  subsets: ['latin', 'vietnamese'],
+const beVietnamPro = localFont({
+  src: [
+    { path: '../../public/fonts/BeVietnamPro-Regular.ttf',   weight: '400', style: 'normal' },
+    { path: '../../public/fonts/BeVietnamPro-Medium.ttf',    weight: '500', style: 'normal' },
+    { path: '../../public/fonts/BeVietnamPro-SemiBold.ttf',  weight: '600', style: 'normal' },
+    { path: '../../public/fonts/BeVietnamPro-Bold.ttf',      weight: '700', style: 'normal' },
+    { path: '../../public/fonts/BeVietnamPro-ExtraBold.ttf', weight: '800', style: 'normal' },
+  ],
   variable: '--font-heading',
 })
 
-const beVietnamProBody = Be_Vietnam_Pro({
-  weight: ['400', '500'],
-  subsets: ['latin', 'vietnamese'],
+const beVietnamProBody = localFont({
+  src: [
+    { path: '../../public/fonts/BeVietnamPro-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/BeVietnamPro-Medium.ttf',  weight: '500', style: 'normal' },
+  ],
   variable: '--font-sans',
 })
 
