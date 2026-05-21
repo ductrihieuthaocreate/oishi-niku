@@ -2,7 +2,14 @@
 
 import { sql } from '@/lib/db'
 import { sendOrderNotification, sendCustomerConfirmation } from '@/lib/email'
+import { getCustomerSession } from '@/lib/session'
 import type { CartItem } from '@/lib/cart-context'
+
+export async function getSessionCustomer() {
+  const session = await getCustomerSession()
+  if (!session.customerId) return null
+  return { name: session.customerName ?? '', email: session.customerEmail ?? '' }
+}
 
 export interface ShippingDetails {
   name: string
@@ -35,6 +42,8 @@ export async function placeOrder(items: CartItem[], shipping: ShippingDetails) {
   const total       = subtotal + tax + shippingFee + codFee
 
   const fullAddress = [shipping.address1, shipping.address2].filter(Boolean).join(' ')
+  const customerSession = await getCustomerSession()
+  const userId = customerSession.customerId ?? null
 
   try {
     const [order] = await sql`
@@ -42,13 +51,13 @@ export async function placeOrder(items: CartItem[], shipping: ShippingDetails) {
         total, subtotal, shipping_fee, tax, status,
         shipping_name, shipping_email, shipping_phone,
         shipping_address, shipping_city, shipping_state,
-        shipping_postal, shipping_country, payment_method, notes
+        shipping_postal, shipping_country, payment_method, notes, user_id
       ) VALUES (
         ${total}, ${subtotal}, ${shippingFee + codFee}, ${tax}, 'pending',
         ${shipping.name}, ${shipping.email}, ${shipping.phone || null},
         ${fullAddress}, ${shipping.city}, ${shipping.prefecture},
         ${shipping.postal}, 'JP', ${shipping.paymentMethod},
-        ${shipping.deliveryTime ?? null}
+        ${shipping.deliveryTime ?? null}, ${userId}
       )
       RETURNING id
     `

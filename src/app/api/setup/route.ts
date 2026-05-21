@@ -90,9 +90,26 @@ export async function GET(req: NextRequest) {
   await sql`CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id)`
   await sql`CREATE INDEX IF NOT EXISTS idx_products_featured ON products(is_featured) WHERE is_featured = TRUE`
   await sql`CREATE INDEX IF NOT EXISTS idx_products_stock    ON products(stock)`
+  await sql`
+    CREATE TABLE IF NOT EXISTS customers (
+      id            SERIAL PRIMARY KEY,
+      name          TEXT NOT NULL,
+      email         TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      phone         TEXT,
+      created_at    TIMESTAMPTZ DEFAULT NOW()
+    )
+  `
+  steps.push('customers table ok')
+
+  await sql`ALTER TABLE orders ADD COLUMN IF NOT EXISTS user_id INT REFERENCES customers(id) ON DELETE SET NULL`
+  steps.push('orders.user_id ok')
+
   await sql`CREATE INDEX IF NOT EXISTS idx_orders_status     ON orders(status)`
   await sql`CREATE INDEX IF NOT EXISTS idx_orders_email      ON orders(shipping_email)`
   await sql`CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id)`
+  await sql`CREATE INDEX IF NOT EXISTS idx_orders_user       ON orders(user_id) WHERE user_id IS NOT NULL`
+  await sql`CREATE INDEX IF NOT EXISTS idx_customers_email   ON customers(email)`
   steps.push('indexes ok')
 
   // Seed categories

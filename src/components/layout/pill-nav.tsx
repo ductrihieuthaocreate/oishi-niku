@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
-import { ShoppingBag } from 'lucide-react'
+import { ShoppingBag, User } from 'lucide-react'
 import { useCart } from '@/lib/cart-context'
 import { Logo } from '@/components/logo'
 import { LanguageSwitcher } from '@/components/language-switcher'
@@ -17,9 +17,10 @@ interface NavItem {
 interface PillNavProps {
   items: NavItem[]
   className?: string
+  customer?: { name: string } | null
 }
 
-export function PillNav({ items, className = '' }: PillNavProps) {
+export function PillNav({ items, className = '', customer }: PillNavProps) {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const circleRefs = useRef<(HTMLSpanElement | null)[]>([])
@@ -199,6 +200,17 @@ export function PillNav({ items, className = '' }: PillNavProps) {
         {/* Right Actions */}
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
+          <Link
+            href={customer ? '/account' : '/auth/login'}
+            className="w-[var(--nav-h)] h-[var(--nav-h)] rounded-full inline-flex items-center justify-center transition-transform duration-200 hover:scale-105"
+            style={{ background: 'var(--pill-bg)', color: 'var(--hover-text)' }}
+            aria-label={customer ? 'My Account' : 'Login'}
+          >
+            {customer
+              ? <span className="text-[13px] font-bold leading-none">{customer.name.charAt(0).toUpperCase()}</span>
+              : <User className="w-5 h-5" />
+            }
+          </Link>
           <button
             onClick={toggleCart}
             className="w-[var(--nav-h)] h-[var(--nav-h)] rounded-full border-none inline-flex items-center justify-center cursor-pointer relative transition-transform duration-200 hover:scale-105"
@@ -239,6 +251,15 @@ export function PillNav({ items, className = '' }: PillNavProps) {
               </Link>
             </li>
           ))}
+          <li>
+            <Link
+              href={customer ? '/account' : '/auth/login'}
+              className="block py-3.5 px-5 text-[15px] font-semibold uppercase tracking-wide rounded-full bg-primary text-primary-foreground hover:opacity-80 transition-all duration-200"
+              onClick={closeMobileMenu}
+            >
+              {customer ? customer.name : 'ログイン'}
+            </Link>
+          </li>
         </ul>
       </div>
     </div>

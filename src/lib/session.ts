@@ -17,3 +17,23 @@ export const sessionOptions = {
 export async function getAdminSession() {
   return getIronSession<AdminSession>(await cookies(), sessionOptions)
 }
+
+export interface CustomerSession {
+  customerId?: number
+  customerName?: string
+  customerEmail?: string
+}
+
+const customerSessionOptions = {
+  password: process.env.SESSION_SECRET!,
+  cookieName: 'oishi_customer',
+  cookieOptions: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'lax' as const,
+  },
+}
+
+export async function getCustomerSession() {
+  return getIronSession<CustomerSession>(await cookies(), customerSessionOptions)
+}

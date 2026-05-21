@@ -1,21 +1,27 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { getAdminSession } from '@/lib/session'
+import bcrypt from 'bcryptjs'
+import { sql } from '@/lib/db'
+import { getCustomerSession } from '@/lib/session'
 
-export async function adminLogin(formData: FormData) {
-  const email = formData.get('email') as string
+export async function customerLogin(formData: FormData) {
+  const email    = (formData.get('email') as string).toLowerCase().trim()
   const password = formData.get('password') as string
+  const to       = (formData.get('redirect') as string) || '/account'
 
-  if (
-    email === process.env.ADMIN_EMAIL &&
-    password === process.env.ADMIN_PASSWORD
-  ) {
-    const session = await getAdminSession()
-    session.isAdmin = true
-    await session.save()
-    redirect('/admin')
+  const rows = await sql`SELECT id, name, email, password_hash FROM customers WHERE email = ${email} LIMIT 1`
+  const customer = rows[0] as any
+
+  if (!customer || !await bcrypt.compare(password, customer.password_hash)) {
+    return { error: 'メールアドレスまたはパスワードが正しくありません。' }
   }
 
-  return { error: 'Invalid credentials' }
+  const session = await getCustomerSession()
+  session.customerId    = customer.id
+  session.customerName  = customer.name
+  session.customerEmail = customer.email
+  await session.save()
+
+  redirect(to)
 }

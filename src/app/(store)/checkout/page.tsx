@@ -9,7 +9,7 @@ import {
   Building2, Clock, Calendar,
 } from 'lucide-react'
 import { useCart } from '@/lib/cart-context'
-import { placeOrder } from './actions'
+import { placeOrder, getSessionCustomer } from './actions'
 
 const COD_FEE                 = 390
 const SHIPPING_FEE            = 1000
@@ -108,6 +108,7 @@ export default function CheckoutPage() {
   const [finalTotal, setFinalTotal]       = useState(0)
 
   useEffect(() => {
+    let restored = false
     try {
       const raw = localStorage.getItem(LS_KEY)
       if (raw) {
@@ -126,8 +127,17 @@ export default function CheckoutPage() {
           address1:   d.address1   ?? '',
           address2:   d.address2   ?? '',
         }))
+        restored = true
       }
     } catch {}
+
+    if (!restored) {
+      getSessionCustomer().then(info => {
+        if (info) {
+          setShipping(s => ({ ...s, name: info.name, email: info.email }))
+        }
+      })
+    }
   }, [])
 
   function saveDraft(next: Partial<ShippingForm>, nextCode?: string, nextTime?: string, nextDate?: string) {
