@@ -38,8 +38,9 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
+      className="h-full flex flex-col"
     >
-      <Link href={`/products/${product.id}`} className="group block">
+      <Link href={`/products/${product.id}`} className="group flex flex-col h-full">
         <div className="relative aspect-square bg-secondary rounded-xl overflow-hidden border border-border/50 group-hover:border-primary/30 transition-colors">
           {product.image_url ? (
             <Image
@@ -90,14 +91,14 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           )}
         </div>
 
-        <div className="mt-3 space-y-1">
+        <div className="mt-3 flex flex-col flex-1 gap-1">
           {product.categories && (
             <p className="text-xs text-muted-foreground tracking-wider uppercase">{product.categories.name}</p>
           )}
-          <h3 className="font-medium text-foreground text-sm leading-tight group-hover:text-primary transition-colors line-clamp-2">
+          <h3 className="font-medium text-foreground text-sm leading-tight group-hover:text-primary transition-colors line-clamp-2 flex-1">
             {product.name}
           </h3>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mt-1">
             <span className="text-primary font-semibold">{formatPrice(product.price)}</span>
             {product.weight_grams && (
               <span className="text-xs text-muted-foreground">{product.weight_grams}g</span>
