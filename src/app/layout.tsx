@@ -1,19 +1,27 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import { Be_Vietnam_Pro } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const quen = localFont({
-  src: '../../public/fonts/Quen-Regular.otf',
+const montserrat = localFont({
+  src: [
+    { path: '../../public/fonts/Montserrat-Regular.otf',   weight: '400', style: 'normal' },
+    { path: '../../public/fonts/Montserrat-Medium.otf',    weight: '500', style: 'normal' },
+    { path: '../../public/fonts/Montserrat-SemiBold.otf',  weight: '600', style: 'normal' },
+    { path: '../../public/fonts/Montserrat-Bold.otf',      weight: '700', style: 'normal' },
+    { path: '../../public/fonts/Montserrat-ExtraBold.otf', weight: '800', style: 'normal' },
+    { path: '../../public/fonts/Montserrat-Black.otf',     weight: '900', style: 'normal' },
+  ],
   variable: '--font-heading',
-  weight: '400',
 })
 
-const beVietnamPro = Be_Vietnam_Pro({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin', 'vietnamese'],
+const montserratBody = localFont({
+  src: [
+    { path: '../../public/fonts/Montserrat-Regular.otf',  weight: '400', style: 'normal' },
+    { path: '../../public/fonts/Montserrat-Medium.otf',   weight: '500', style: 'normal' },
+    { path: '../../public/fonts/Montserrat-SemiBold.otf', weight: '600', style: 'normal' },
+  ],
   variable: '--font-sans',
 })
 
@@ -28,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${quen.variable} ${beVietnamPro.variable} bg-background`}>
+    <html lang="ja" className={`${montserrat.variable} ${montserratBody.variable} bg-background`}>
       <body className="font-sans antialiased">
         {children}
         <Toaster />
