@@ -1,27 +1,18 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
+import { Montserrat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const montserrat = localFont({
-  src: [
-    { path: '../../public/fonts/Montserrat-Regular.otf',   weight: '400', style: 'normal' },
-    { path: '../../public/fonts/Montserrat-Medium.otf',    weight: '500', style: 'normal' },
-    { path: '../../public/fonts/Montserrat-SemiBold.otf',  weight: '600', style: 'normal' },
-    { path: '../../public/fonts/Montserrat-Bold.otf',      weight: '700', style: 'normal' },
-    { path: '../../public/fonts/Montserrat-ExtraBold.otf', weight: '800', style: 'normal' },
-    { path: '../../public/fonts/Montserrat-Black.otf',     weight: '900', style: 'normal' },
-  ],
+const montserrat = Montserrat({
+  weight: ['400', '500', '600', '700', '800', '900'],
+  subsets: ['latin', 'vietnamese'],
   variable: '--font-heading',
 })
 
-const montserratBody = localFont({
-  src: [
-    { path: '../../public/fonts/Montserrat-Regular.otf',  weight: '400', style: 'normal' },
-    { path: '../../public/fonts/Montserrat-Medium.otf',   weight: '500', style: 'normal' },
-    { path: '../../public/fonts/Montserrat-SemiBold.otf', weight: '600', style: 'normal' },
-  ],
+const montserratBody = Montserrat({
+  weight: ['400', '500', '600'],
+  subsets: ['latin', 'vietnamese'],
   variable: '--font-sans',
 })
 
@@ -36,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${montserrat.variable} ${montserratBody.variable} bg-background`}>
+    <html lang="ja" className={`${montserrat.variable} ${montserratBody.variable} bg-background`} suppressHydrationWarning>
       <body className="font-sans antialiased">
         {children}
         <Toaster />
