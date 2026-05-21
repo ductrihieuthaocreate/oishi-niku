@@ -8,26 +8,33 @@ export interface ShippingDetails {
   name: string
   email: string
   phone: string
-  address: string
-  city: string
-  state: string
   postal: string
-  country: string
-  paymentMethod: 'card' | 'cod' | 'bank'
-  notes?: string
+  prefecture: string
+  city: string
+  address1: string
+  address2: string
+  paymentMethod: 'cod' | 'bank'
+  deliveryTime?: string
 }
 
-const SHIPPING_FEE = 1500
-const FREE_SHIPPING_THRESHOLD = 10000
-const TAX_RATE = 0.10
+const COD_FEE                 = 390
+const SHIPPING_FEE            = 1000
+const SHIPPING_FEE_REMOTE     = 1500
+const FREE_SHIPPING_THRESHOLD = 15000
+const TAX_RATE                = 0.1
+const REMOTE_PREFECTURES      = ['北海道', '沖縄県']
 
 export async function placeOrder(items: CartItem[], shipping: ShippingDetails) {
-  if (!items.length) return { error: 'Your cart is empty.' }
+  if (!items.length) return { error: 'カートが空です。' }
 
-  const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0)
-  const tax = parseFloat((subtotal * TAX_RATE).toFixed(2))
-  const shippingFee = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE
-  const total = parseFloat((subtotal + tax + shippingFee).toFixed(2))
+  const subtotal    = items.reduce((s, i) => s + i.price * i.quantity, 0)
+  const tax         = Math.round(subtotal * TAX_RATE)
+  const isRemote    = REMOTE_PREFECTURES.includes(shipping.prefecture)
+  const shippingFee = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : (isRemote ? SHIPPING_FEE_REMOTE : SHIPPING_FEE)
+  const codFee      = shipping.paymentMethod === 'cod' ? COD_FEE : 0
+  const total       = subtotal + tax + shippingFee + codFee
+
+  const fullAddress = [shipping.address1, shipping.address2].filter(Boolean).join(' ')
 
   try {
     const [order] = await sql`
@@ -37,16 +44,16 @@ export async function placeOrder(items: CartItem[], shipping: ShippingDetails) {
         shipping_address, shipping_city, shipping_state,
         shipping_postal, shipping_country, payment_method, notes
       ) VALUES (
-        ${total}, ${subtotal}, ${shippingFee}, ${tax}, 'pending',
+        ${total}, ${subtotal}, ${shippingFee + codFee}, ${tax}, 'pending',
         ${shipping.name}, ${shipping.email}, ${shipping.phone || null},
-        ${shipping.address}, ${shipping.city}, ${shipping.state},
-        ${shipping.postal}, ${shipping.country}, ${shipping.paymentMethod},
-        ${shipping.notes ?? null}
+        ${fullAddress}, ${shipping.city}, ${shipping.prefecture},
+        ${shipping.postal}, 'JP', ${shipping.paymentMethod},
+        ${shipping.deliveryTime ?? null}
       )
       RETURNING id
     `
 
-    if (!order) return { error: 'Failed to create order.' }
+    if (!order) return { error: '注文の作成に失敗しました。' }
 
     const orderId = (order as any).id
 
@@ -70,20 +77,20 @@ export async function placeOrder(items: CartItem[], shipping: ShippingDetails) {
       sendOrderNotification({
         id: orderId,
         total,
-        shipping_name: shipping.name,
-        shipping_email: shipping.email,
-        shipping_phone: shipping.phone,
-        shipping_address: shipping.address,
-        shipping_city: shipping.city,
-        shipping_state: shipping.state,
-        shipping_postal: shipping.postal,
-        payment_method: shipping.paymentMethod,
+        shipping_name:    shipping.name,
+        shipping_email:   shipping.email,
+        shipping_phone:   shipping.phone,
+        shipping_address: fullAddress,
+        shipping_city:    shipping.city,
+        shipping_state:   shipping.prefecture,
+        shipping_postal:  shipping.postal,
+        payment_method:   shipping.paymentMethod,
         items: emailItems,
       }),
       sendCustomerConfirmation({
         id: orderId,
         total,
-        shipping_name: shipping.name,
+        shipping_name:  shipping.name,
         shipping_email: shipping.email,
         payment_method: shipping.paymentMethod,
         items: emailItems,
@@ -92,6 +99,6 @@ export async function placeOrder(items: CartItem[], shipping: ShippingDetails) {
 
     return { success: true, orderId }
   } catch (e: any) {
-    return { error: e.message ?? 'Something went wrong.' }
+    return { error: e.message ?? '注文処理中にエラーが発生しました。' }
   }
 }

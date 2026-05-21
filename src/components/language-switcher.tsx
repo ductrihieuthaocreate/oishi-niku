@@ -7,7 +7,6 @@ import type { Lang } from '@/lib/lang-dict'
 const LANGS: { code: Lang; label: string }[] = [
   { code: 'ja', label: 'JP' },
   { code: 'en', label: 'EN' },
-  { code: 'vi', label: 'VI' },
 ]
 
 export function LanguageSwitcher() {

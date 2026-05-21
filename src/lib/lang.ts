@@ -7,5 +7,5 @@ export type { Dict } from './lang-dict'
 export async function getLang(): Promise<Lang> {
   const cookieStore = await cookies()
   const lang = cookieStore.get('lang')?.value
-  return lang === 'en' || lang === 'vi' ? lang : 'ja'
+  return lang === 'en' ? lang : 'ja'
 }
