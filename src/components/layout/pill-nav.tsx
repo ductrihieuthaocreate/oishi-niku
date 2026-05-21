@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
 import { ShoppingBag, User } from 'lucide-react'
 import { useCart } from '@/lib/cart-context'
+import { useLang } from '@/lib/lang-context'
 import { Logo } from '@/components/logo'
 import { LanguageSwitcher } from '@/components/language-switcher'
 
@@ -22,6 +23,7 @@ interface PillNavProps {
 
 export function PillNav({ items, className = '', customer }: PillNavProps) {
   const pathname = usePathname()
+  const { t } = useLang()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const circleRefs = useRef<(HTMLSpanElement | null)[]>([])
   const tlRefs = useRef<gsap.core.Timeline[]>([])
@@ -257,7 +259,7 @@ export function PillNav({ items, className = '', customer }: PillNavProps) {
               className="block py-3.5 px-5 text-[15px] font-semibold uppercase tracking-wide rounded-full bg-primary text-primary-foreground hover:opacity-80 transition-all duration-200"
               onClick={closeMobileMenu}
             >
-              {customer ? customer.name : 'ログイン'}
+              {customer ? customer.name : t.auth.login}
             </Link>
           </li>
         </ul>
