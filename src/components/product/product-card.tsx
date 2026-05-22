@@ -2,11 +2,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { ShoppingBag, Star } from 'lucide-react'
+import { ShoppingBag } from 'lucide-react'
 import { useCart } from '@/lib/cart-context'
 import { useLang } from '@/lib/lang-context'
-import { formatPrice } from '@/lib/utils'
 import type { Product } from '@/lib/types'
 import { toast } from 'sonner'
 
@@ -32,88 +30,87 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     toast.success(product.name + t.product.addedToCartSuffix)
   }
 
-  const isOutOfStock = product.stock <= 0
+  const inStock = product.stock > 0
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2 }}
-      className="h-full flex flex-col"
-    >
-      <Link href={`/products/${product.id}`} className="group flex flex-col h-full">
-        <div className="relative aspect-square bg-secondary rounded-xl overflow-hidden border border-border/50 group-hover:border-primary/30 transition-colors">
+    <Link href={`/products/${product.id}`} className="block group">
+      <div className="relative bg-background rounded-3xl overflow-hidden go2go-shadow go2go-transition group-hover:scale-[1.02] h-full flex flex-col">
+
+        {/* Image */}
+        <div className="relative aspect-square bg-card overflow-hidden">
           {product.image_url ? (
             <Image
               src={product.image_url}
               alt={product.name}
               fill
               priority={priority}
-              className={`object-cover transition-transform duration-500 group-hover:scale-105 ${isOutOfStock ? 'opacity-60' : ''}`}
+              className="object-contain go2go-transition group-hover:scale-105 p-2"
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-muted-foreground/30">
+            <div className="w-full h-full flex items-center justify-center text-muted-foreground/20">
               <ShoppingBag className="w-12 h-12" />
             </div>
           )}
 
-          {/* Badges */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1">
-            {isOutOfStock && (
-              <span className="bg-destructive text-destructive-foreground text-xs font-semibold px-2 py-1 rounded-full">
+          {/* Out of stock overlay */}
+          {!inStock && (
+            <div className="absolute inset-0 bg-background/70 backdrop-blur-[2px] flex items-center justify-center">
+              <span className="bg-foreground/80 text-background text-[10px] font-medium px-3 py-1 rounded-full">
                 {t.product.soldOut}
               </span>
-            )}
-            {!isOutOfStock && product.sales_count >= 100 && (
-              <span className="bg-primary text-primary-foreground text-xs font-semibold px-2 py-1 rounded-full">
-                {t.product.popular}
-              </span>
-            )}
-            {product.is_featured && !isOutOfStock && (
-              <span className="bg-secondary/90 text-foreground text-xs font-semibold px-2 py-1 rounded-full border border-border">
-                {t.product.featuredBadge}
-              </span>
-            )}
-          </div>
-
-          {/* Quick Add */}
-          {!isOutOfStock && (
-            <motion.button
-              initial={{ opacity: 0, y: 10 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleAddToCart}
-              className="absolute bottom-2 left-2 right-2 bg-primary text-primary-foreground font-heading tracking-wider text-sm py-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              {t.product.quickAdd}
-            </motion.button>
-          )}
-        </div>
-
-        <div className="mt-3 flex flex-col flex-1 gap-1">
-          {product.categories && (
-            <p className="text-xs text-muted-foreground tracking-wider uppercase">{product.categories.name}</p>
-          )}
-          <h3 className="font-medium text-foreground text-sm leading-tight group-hover:text-primary transition-colors line-clamp-2 flex-1">
-            {product.name}
-          </h3>
-          <div className="flex items-center justify-between mt-1">
-            <span className="text-primary font-semibold">{formatPrice(product.price)}</span>
-            {product.weight_grams && (
-              <span className="text-xs text-muted-foreground">{product.weight_grams}g</span>
-            )}
-          </div>
-          {product.grade && (
-            <div className="flex items-center gap-1">
-              <Star className="w-3 h-3 text-primary fill-primary" />
-              <span className="text-xs text-muted-foreground">{product.grade}</span>
             </div>
           )}
+
+          {/* Badge */}
+          {inStock && product.sales_count >= 100 && (
+            <span className="absolute top-3 left-3 bg-white text-foreground text-[9px] font-medium px-2.5 py-1 rounded-full go2go-shadow">
+              {t.product.popular}
+            </span>
+          )}
+          {inStock && product.is_featured && (
+            <span className="absolute top-3 right-3 bg-accent/20 text-foreground text-[9px] font-medium px-2.5 py-1 rounded-full">
+              {t.product.featuredBadge}
+            </span>
+          )}
+
+          {/* Quick add */}
+          {inStock && (
+            <button
+              onClick={handleAddToCart}
+              className="absolute bottom-0 inset-x-0 bg-primary text-primary-foreground font-medium text-xs py-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-1.5"
+            >
+              <ShoppingBag className="w-3.5 h-3.5" />
+              {t.product.quickAdd}
+            </button>
+          )}
         </div>
-      </Link>
-    </motion.div>
+
+        {/* Info */}
+        <div className="p-4 flex flex-col flex-1 gap-1">
+          {product.grade && (
+            <p className="text-[10px] text-muted-foreground tracking-wider font-mono">{product.grade}</p>
+          )}
+          {!product.grade && product.categories && (
+            <p className="text-[10px] text-muted-foreground tracking-wider uppercase">{product.categories.name}</p>
+          )}
+          <h3
+            className="font-serif text-base text-foreground leading-snug go2go-transition group-hover:text-primary/80"
+            style={{ fontFamily: 'var(--font-cormorant)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+          >
+            {product.name}
+          </h3>
+          <div className="mt-auto pt-2 flex items-end justify-between">
+            <div className="flex items-baseline gap-1.5 flex-wrap">
+              <span className="font-semibold text-foreground text-base">¥{product.price.toLocaleString()}</span>
+              <span className="text-[10px] text-muted-foreground">税込 ¥{Math.round(product.price * 1.1).toLocaleString()}</span>
+            </div>
+            {product.weight_grams && (
+              <span className="text-[10px] text-muted-foreground">{product.weight_grams}g</span>
+            )}
+          </div>
+        </div>
+      </div>
+    </Link>
   )
 }

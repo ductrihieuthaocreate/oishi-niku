@@ -1,19 +1,21 @@
-import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Cormorant_Garamond, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const montserrat = Montserrat({
-  weight: ['400', '500', '600', '700', '800', '900'],
-  subsets: ['latin', 'vietnamese'],
-  variable: '--font-heading',
+const cormorant = Cormorant_Garamond({
+  variable: '--font-cormorant',
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
 })
 
-const montserratBody = Montserrat({
-  weight: ['400', '500', '600'],
-  subsets: ['latin', 'vietnamese'],
-  variable: '--font-sans',
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -25,10 +27,16 @@ export const metadata: Metadata = {
   icons: { icon: '/meat.png' },
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${montserrat.variable} ${montserratBody.variable} bg-background`} suppressHydrationWarning>
-      <body className="font-sans antialiased">
+    <html lang="ja" className={`${cormorant.variable} ${inter.variable} bg-background`} suppressHydrationWarning>
+      <body className="font-sans antialiased min-h-screen flex flex-col">
         {children}
         <Toaster />
         {process.env.NODE_ENV === 'production' && <Analytics />}

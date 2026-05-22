@@ -1,116 +1,183 @@
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { Suspense } from 'react'
 import { sql } from '@/lib/db'
 import { getLang, dict } from '@/lib/lang'
-import { ProductCard } from '@/components/product/product-card'
 import { HeroSection } from '@/components/home/hero-section'
-import { Button } from '@/components/ui/button'
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
-import type { Product } from '@/lib/types'
+import { ProductCard } from '@/components/product/product-card'
+import { BestSellers } from '@/components/home/best-sellers'
+import { AnnouncementCarousel } from '@/components/home/announcement-carousel'
+import { Sidebar } from '@/components/product/sidebar'
+import { ProductFilters } from '@/components/product/product-filters'
+import { Pagination } from '@/components/product/pagination'
+import type { Product, Category } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
-async function getFeaturedProducts(): Promise<Product[]> {
-  const rows = await sql`
+const PAGE_SIZE = 24
+
+interface PageProps {
+  searchParams: Promise<{
+    category?: string
+    search?: string
+    sort?: string
+    inStock?: string
+    page?: string
+  }>
+}
+
+async function getCategories(): Promise<Category[]> {
+  const rows = await sql`SELECT * FROM categories ORDER BY name`
+  return rows as unknown as Category[]
+}
+
+async function getProducts(params: Awaited<PageProps['searchParams']>) {
+  const page = Number(params.page ?? 1)
+  const offset = (page - 1) * PAGE_SIZE
+
+  const qParams: unknown[] = []
+  const conditions: string[] = []
+
+  if (params.search) {
+    qParams.push(`%${params.search}%`)
+    conditions.push(`p.name ILIKE $${qParams.length}`)
+  }
+
+  if (params.category) {
+    const cats = await sql`SELECT id FROM categories WHERE slug = ${params.category} LIMIT 1`
+    if ((cats as any[])[0]) {
+      qParams.push((cats as any[])[0].id)
+      conditions.push(`p.category_id = $${qParams.length}`)
+    }
+  }
+
+  if (params.inStock === '1') {
+    conditions.push('p.stock > 0')
+  }
+
+  const whereClause = conditions.length ? `WHERE ${conditions.join(' AND ')}` : ''
+
+  let orderClause = 'ORDER BY p.created_at DESC'
+  if (params.sort === 'popular')     orderClause = 'ORDER BY p.sales_count DESC'
+  else if (params.sort === 'price_asc')  orderClause = 'ORDER BY p.price ASC'
+  else if (params.sort === 'price_desc') orderClause = 'ORDER BY p.price DESC'
+
+  const mainQuery = `
     SELECT p.*, p.price::float8 AS price,
       CASE WHEN c.id IS NOT NULL THEN json_build_object('id', c.id, 'name', c.name, 'slug', c.slug) ELSE NULL END AS categories
     FROM products p
     LEFT JOIN categories c ON p.category_id = c.id
-    WHERE p.is_featured = true AND p.stock > 0
+    ${whereClause}
+    ${orderClause}
+    LIMIT $${qParams.length + 1} OFFSET $${qParams.length + 2}
+  `
+  const countQuery = `SELECT COUNT(*)::int AS count FROM products p ${whereClause}`
+
+  const toRows = (r: any) => Array.isArray(r) ? r : (r.rows ?? [])
+
+  const [productsRes, totalRes] = await Promise.all([
+    (sql as any).query(mainQuery, [...qParams, PAGE_SIZE, offset]),
+    (sql as any).query(countQuery, qParams),
+  ])
+
+  const products = toRows(productsRes) as Product[]
+  const total = (toRows(totalRes)[0]?.count ?? 0) as number
+  return { products, total }
+}
+
+async function getBestSellers(): Promise<Product[]> {
+  const rows = await sql`
+    SELECT p.*, p.price::float8 AS price
+    FROM products p
+    WHERE p.stock > 0
     ORDER BY p.sales_count DESC
-    LIMIT 8
+    LIMIT 5
   `
   return rows as unknown as Product[]
 }
 
-export default async function HomePage() {
-  const [products, lang] = await Promise.all([getFeaturedProducts(), getLang()])
+export default async function HomePage({ searchParams }: PageProps) {
+  const params = await searchParams
+  const lang = await getLang()
   const t = dict[lang]
-  const h = t.home
+
+  const [categories, { products, total }, bestSellers] = await Promise.all([
+    getCategories(),
+    getProducts(params),
+    getBestSellers(),
+  ])
+
+  const page = Number(params.page ?? 1)
+  const totalPages = Math.ceil(total / PAGE_SIZE)
+  const isLanding = !params.search && !params.category && !params.sort && page === 1
 
   return (
-    <div className="min-h-screen">
-      <HeroSection />
-
-      <section className="py-10 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-7 lg:mb-12">
-            <div>
-              <p className="text-primary font-medium tracking-widest uppercase mb-1 text-xs sm:text-sm">
-                {h.featuredEyebrow}
-              </p>
-              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl tracking-wider text-foreground">
-                {h.featuredTitle}
-              </h2>
+    <div className="w-full">
+      {/* ── DESKTOP LAYOUT ── */}
+      <div className="hidden md:block w-full px-4 mx-auto max-w-7xl">
+        {isLanding && <HeroSection categories={categories as any} />}
+        <div className="mt-6 pb-16">
+          <Suspense><AnnouncementCarousel /></Suspense>
+          <div className="flex gap-6">
+            <Sidebar categories={categories} selectedCategory={params.category} />
+            <div className="flex-1 min-w-0">
+              <Suspense><ProductFilters categories={categories} total={total} /></Suspense>
+              {products.length === 0 ? (
+                <div className="bg-muted/50 rounded-3xl p-16 text-center">
+                  <p className="text-muted-foreground">{t.products.notFound}</p>
+                  <a href="/" className="mt-4 inline-block text-primary hover:underline text-sm">{t.products.notFoundDesc}</a>
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 lg:grid-cols-4 gap-3">
+                  {products.map(p => <ProductCard key={p.id} product={p} />)}
+                </div>
+              )}
+              <Suspense><Pagination currentPage={page} totalPages={totalPages} basePath="/" /></Suspense>
             </div>
-            <Link href="/products" className="hidden sm:flex items-center gap-2 text-foreground hover:text-primary transition-colors">
-              {h.featuredViewAll} <ArrowRight className="w-4 h-4" />
-            </Link>
+            <aside className="w-52 shrink-0">
+              <BestSellers products={bestSellers} />
+            </aside>
           </div>
+        </div>
+      </div>
 
-          {products.length > 0 ? (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              {products.map((product, i) => (
-                <ProductCard key={product.id} product={product} priority={i < 4} />
-              ))}
+      {/* ── MOBILE LAYOUT ── */}
+      <div className="md:hidden">
+        <div className="px-4 pt-3">
+          <Suspense><AnnouncementCarousel /></Suspense>
+        </div>
+
+        {isLanding && (
+          <div className="px-4 mb-4">
+            <HeroSection categories={categories as any} />
+          </div>
+        )}
+
+        <div className="px-4">
+          <Suspense><ProductFilters categories={categories} total={total} /></Suspense>
+        </div>
+
+        <div className="px-4">
+          {products.length === 0 ? (
+            <div className="bg-muted/50 rounded-3xl p-12 text-center mt-4">
+              <p className="text-muted-foreground">{t.products.notFound}</p>
+              <a href="/" className="mt-3 inline-block text-primary text-sm font-medium">フィルターをクリア</a>
             </div>
           ) : (
-            <div className="text-center py-20 border border-dashed border-border rounded-xl">
-              <p className="text-muted-foreground text-lg mb-2">{h.featuredEmpty}</p>
-              <p className="text-sm text-muted-foreground">{h.featuredEmptyDesc}</p>
+            <div className="grid grid-cols-2 gap-3">
+              {products.map(p => <ProductCard key={p.id} product={p} />)}
             </div>
           )}
-
-          <div className="mt-8 text-center sm:hidden">
-            <Button asChild variant="outline">
-              <Link href="/products">{h.featuredViewAllBtn}</Link>
-            </Button>
-          </div>
         </div>
-      </section>
 
-      <section className="py-10 lg:py-24 bg-secondary/30">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="text-primary font-medium tracking-widest uppercase mb-4">{h.faqEyebrow}</p>
-            <h2 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground">{h.faqTitle}</h2>
-          </div>
-          <Accordion type="single" collapsible className="space-y-4" id="faq">
-            {h.faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-0">
-                <div className="bg-secondary/50 border border-border/50 rounded-xl overflow-hidden hover:border-primary/30 transition-colors">
-                  <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                    <span className="font-heading tracking-wider text-foreground text-left">{faq.q}</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 pt-0">
-                    <p className="text-muted-foreground">{faq.a}</p>
-                  </AccordionContent>
-                </div>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <div className="px-4">
+          <Suspense><Pagination currentPage={page} totalPages={totalPages} basePath="/" /></Suspense>
         </div>
-      </section>
 
-      <section className="py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-card border border-border rounded-2xl p-8 lg:p-16 text-center">
-            <p className="text-primary font-medium tracking-widest uppercase mb-4">{h.b2bEyebrow}</p>
-            <h2 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground mb-6">{h.b2bTitle}</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">{h.b2bDesc}</p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder={h.b2bPlaceholder}
-                className="flex-1 bg-secondary border border-border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90 font-heading tracking-wider px-8">
-                {h.b2bCta}
-              </Button>
-            </form>
+        {bestSellers.length > 0 && (
+          <div className="px-4 mt-6 mb-4">
+            <BestSellers products={bestSellers} />
           </div>
-        </div>
-      </section>
+        )}
+      </div>
     </div>
   )
 }

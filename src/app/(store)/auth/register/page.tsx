@@ -3,10 +3,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { customerRegister } from './actions'
-import { Mail, Lock, User, Eye, EyeOff, UserPlus } from 'lucide-react'
+import { Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-react'
 import { useLang } from '@/lib/lang-context'
 
-const inputCls = 'w-full border border-border bg-background rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 placeholder:text-muted-foreground/60 transition-shadow'
+const inputCls = 'w-full border border-border bg-background rounded-2xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all placeholder:text-muted-foreground/60'
 
 export default function RegisterPage() {
   const [showPw, setShowPw]           = useState(false)
@@ -29,21 +29,70 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-24">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4">
-            <UserPlus className="w-6 h-6 text-primary" />
-          </div>
-          <h1 className="font-heading text-4xl tracking-wider text-foreground mb-1">{t.auth.registerTitle}</h1>
-          <p className="text-muted-foreground text-sm">{t.auth.registerSubtitle}</p>
+    <div className="min-h-[90vh] flex items-stretch">
+      {/* Left decorative panel — desktop only */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary via-primary/80 to-accent/70 p-12 flex-col justify-between relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-10 w-48 h-48 bg-white rounded-full blur-2xl" />
         </div>
+        <Link href="/" className="relative">
+          <span
+            className="text-white font-serif text-4xl tracking-wider"
+            style={{ fontFamily: 'var(--font-cormorant)' }}
+          >
+            Oishi Niku
+          </span>
+        </Link>
+        <div className="relative">
+          <blockquote
+            className="text-white font-serif text-3xl font-semibold leading-snug mb-4 italic"
+            style={{ fontFamily: 'var(--font-cormorant)' }}
+          >
+            "新鮮・高品質な精肉を<br />毎日お届けします。"
+          </blockquote>
+          <p className="text-white/70 text-sm">会員登録して特別価格でお買い物</p>
+          <div className="mt-8 flex gap-3 flex-wrap">
+            {['会員限定価格', '注文履歴管理', '簡単再注文'].map(tag => (
+              <span key={tag} className="bg-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/30 backdrop-blur-sm">{tag}</span>
+            ))}
+          </div>
+        </div>
+      </div>
 
-        <div className="bg-card border border-border/60 rounded-3xl p-8 shadow-sm">
+      {/* Right form panel */}
+      <div className="flex-1 flex flex-col justify-center px-6 py-12 lg:px-16">
+        <div className="w-full max-w-md mx-auto">
+          {/* Mobile logo */}
+          <Link href="/" className="lg:hidden flex items-center mb-8">
+            <span
+              className="font-serif text-2xl tracking-wider text-foreground"
+              style={{ fontFamily: 'var(--font-cormorant)' }}
+            >
+              Oishi Niku
+            </span>
+          </Link>
+
+          <div className="mb-8">
+            <h1
+              className="font-serif text-3xl text-foreground mb-1"
+              style={{ fontFamily: 'var(--font-cormorant)' }}
+            >
+              {t.auth.registerTitle}
+            </h1>
+            <p className="text-muted-foreground text-sm">{t.auth.registerSubtitle}</p>
+          </div>
+
+          {error && (
+            <div className="bg-destructive/10 border border-destructive/25 text-destructive text-sm rounded-2xl px-4 py-3 mb-5">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wide">
-                {t.auth.nameLabel} <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                {t.auth.nameLabel}
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -52,8 +101,8 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wide">
-                {t.auth.emailLabel} <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                {t.auth.emailLabel}
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -62,41 +111,37 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wide">
-                {t.auth.pwLabel} <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                {t.auth.pwLabel}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input name="password" type={showPw ? 'text' : 'password'} required placeholder={t.auth.pwPlaceholder} autoComplete="new-password" className={`${inputCls} pl-9 pr-11`} />
-                <button type="button" onClick={() => setShowPw(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                <input name="password" type={showPw ? 'text' : 'password'} required placeholder={t.auth.pwPlaceholder} autoComplete="new-password" className={`${inputCls} pl-9 pr-12`} />
+                <button type="button" onClick={() => setShowPw(v => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
                   {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wide">
-                {t.auth.confirmPwLabel} <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                {t.auth.confirmPwLabel}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input name="confirm" type={showConfirm ? 'text' : 'password'} required placeholder={t.auth.confirmPwPlaceholder} autoComplete="new-password" className={`${inputCls} pl-9 pr-11`} />
-                <button type="button" onClick={() => setShowConfirm(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                <input name="confirm" type={showConfirm ? 'text' : 'password'} required placeholder={t.auth.confirmPwPlaceholder} autoComplete="new-password" className={`${inputCls} pl-9 pr-12`} />
+                <button type="button" onClick={() => setShowConfirm(v => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
                   {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            {error && (
-              <div className="bg-destructive/10 border border-destructive/30 rounded-2xl px-4 py-3">
-                <p className="text-destructive text-sm">{error}</p>
-              </div>
-            )}
-
             <button type="submit" disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-primary text-primary-foreground rounded-2xl font-bold text-base hover:bg-primary/90 disabled:opacity-60 transition-all active:scale-[0.98] font-heading tracking-wider mt-2">
-              <UserPlus className="w-5 h-5" />
-              {loading ? t.auth.registering : t.auth.registerBtn}
+              className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 disabled:opacity-50 transition-all shadow-md shadow-primary/20 active:scale-[0.98] flex items-center justify-center gap-2 mt-2">
+              {loading
+                ? t.auth.registering
+                : <><span>{t.auth.registerBtn}</span><ArrowRight className="w-4 h-4" /></>
+              }
             </button>
 
             <p className="text-center text-sm text-muted-foreground pt-2">
