@@ -1,15 +1,19 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
+import { useLang } from '@/lib/lang-context'
 import type { Product } from '@/lib/types'
 
 export function BestSellers({ products }: { products: Product[] }) {
+  const { t } = useLang()
   if (!products.length) return null
 
   return (
     <div className="bg-muted/50 backdrop-blur-sm rounded-3xl p-4 overflow-hidden">
       <h2 className="font-bold text-primary text-base mb-3 flex items-center gap-2" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.1rem' }}>
-        🏆 人気商品
+        {t.home.bestSellersTitle}
       </h2>
       <ol className="space-y-1">
         {products.map((p, i) => (

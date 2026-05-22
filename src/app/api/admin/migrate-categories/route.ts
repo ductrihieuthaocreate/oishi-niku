@@ -17,16 +17,23 @@ export async function GET(req: NextRequest) {
   }
 
   if (action === 'migrate') {
-    // Identify the 3 keepers by slug/name match
     const cats = categories as any[]
 
-    const chickenCat = cats.find(c => c.slug?.includes('chicken') || c.name?.toLowerCase().includes('chicken') || c.name?.toLowerCase().includes('鶏'))
-    const porkCat    = cats.find(c => c.slug?.includes('pork')    || c.name?.toLowerCase().includes('pork')    || c.name?.toLowerCase().includes('豚'))
-    const beefCat    = cats.find(c =>
-      c.slug?.includes('wagyu') || c.slug?.includes('beef') ||
-      c.name?.toLowerCase().includes('wagyu') || c.name?.toLowerCase().includes('beef') ||
-      c.name?.toLowerCase().includes('牛') || c.name?.toLowerCase().includes('和牛')
+    const chickenCat = cats.find(c =>
+      c.slug?.includes('chicken') || c.name?.toLowerCase().includes('chicken') || c.name?.toLowerCase().includes('鶏')
     )
+    const porkCat = cats.find(c =>
+      c.slug?.includes('pork') || c.name?.toLowerCase().includes('pork') || c.name?.toLowerCase().includes('豚')
+    )
+
+    // Find ALL beef-like categories — keep the first, delete duplicates
+    const beefCats = cats.filter(c => {
+      const lc = (c.name ?? '').toLowerCase()
+      const sl = (c.slug ?? '').toLowerCase()
+      return sl.includes('wagyu') || sl.includes('beef') || lc.includes('wagyu') || lc.includes('beef') || lc.includes('牛') || lc.includes('和牛')
+    })
+
+    const beefCat = beefCats[0]
 
     if (!chickenCat || !porkCat || !beefCat) {
       return NextResponse.json({
@@ -35,30 +42,23 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    // Rename beef category to "Beef" with slug "beef"
+    // Rename primary beef category to "Beef" with slug "beef"
     await sql`UPDATE categories SET name = 'Beef', slug = 'beef' WHERE id = ${beefCat.id}`
 
-    // IDs to keep
-    const keepIds = [chickenCat.id, porkCat.id, beefCat.id]
+    // Remap products from duplicate beef categories to the kept beef cat
+    const duplicateBeefCats = beefCats.slice(1)
+    for (const dup of duplicateBeefCats) {
+      await sql`UPDATE products SET category_id = ${beefCat.id} WHERE category_id = ${dup.id}`
+    }
 
-    // Categories to delete
+    // All categories to delete: duplicateBeef + anything not in our 3 keepers
+    const keepIds = [chickenCat.id, porkCat.id, beefCat.id]
     const toDelete = cats.filter(c => !keepIds.includes(c.id))
 
-    // For each product in a deleted category, remap to closest keeper or null
+    // Remap products from non-beef deleted categories to beef (best fallback)
     for (const cat of toDelete) {
-      const lc = (cat.name ?? '').toLowerCase()
-      let remapId: number | null = null
-
-      if (lc.includes('wagyu') || lc.includes('beef') || lc.includes('牛') || lc.includes('和牛') || lc.includes('lamb') || lc.includes('ラム') || lc.includes('羊')) {
-        remapId = beefCat.id
-      } else if (lc.includes('pork') || lc.includes('豚')) {
-        remapId = porkCat.id
-      } else if (lc.includes('chicken') || lc.includes('鶏')) {
-        remapId = chickenCat.id
-      }
-      // else remapId stays null
-
-      await sql`UPDATE products SET category_id = ${remapId} WHERE category_id = ${cat.id}`
+      if (duplicateBeefCats.some(d => d.id === cat.id)) continue // already remapped above
+      await sql`UPDATE products SET category_id = ${beefCat.id} WHERE category_id = ${cat.id}`
     }
 
     // Delete removed categories

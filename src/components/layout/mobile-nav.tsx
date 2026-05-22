@@ -49,7 +49,7 @@ export function MobileNav() {
               </span>
             )}
           </div>
-          <span className="text-[10px] font-medium">カート</span>
+          <span className="text-[10px] font-medium">{t.nav.cartLabel}</span>
         </button>
 
         <Link
@@ -59,7 +59,7 @@ export function MobileNav() {
           <div className={`w-10 h-6 flex items-center justify-center rounded-full transition-all ${(pathname.startsWith('/account') || pathname.startsWith('/auth')) ? 'bg-primary/10' : ''}`}>
             <User className="w-5 h-5" />
           </div>
-          <span className="text-[10px] font-medium">マイページ</span>
+          <span className="text-[10px] font-medium">{t.nav.accountLabel}</span>
         </Link>
       </div>
     </nav>

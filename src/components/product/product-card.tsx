@@ -108,7 +108,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           <div className="mt-auto pt-2 flex items-end justify-between">
             <div className="flex items-baseline gap-1.5 flex-wrap">
               <span className="font-semibold text-foreground text-base">¥{product.price.toLocaleString()}</span>
-              <span className="text-[10px] text-muted-foreground">税込 ¥{Math.round(product.price * 1.1).toLocaleString()}</span>
+              <span className="text-[10px] text-muted-foreground">{t.product.taxIncluded} ¥{Math.round(product.price * 1.1).toLocaleString()}</span>
             </div>
             {product.weight_grams && (
               <span className="text-[10px] text-muted-foreground">{product.weight_grams}g</span>

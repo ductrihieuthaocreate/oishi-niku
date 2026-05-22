@@ -84,7 +84,7 @@ export function Navbar({ customer }: NavbarProps) {
                   type="text"
                   value={searchQ}
                   onChange={e => setSearchQ(e.target.value)}
-                  placeholder="商品を検索…"
+                  placeholder={t.nav.searchPlaceholder}
                   className="w-48 border border-border bg-background/80 rounded-full px-4 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary/40 placeholder:text-muted-foreground"
                 />
                 <button

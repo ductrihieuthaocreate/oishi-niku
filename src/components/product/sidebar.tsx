@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
+import { useLang } from '@/lib/lang-context'
 import type { Category } from '@/lib/types'
 
 interface SidebarProps {
@@ -8,6 +11,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ categories, selectedCategory }: SidebarProps) {
+  const { t } = useLang()
   return (
     <aside className="w-full md:w-52 shrink-0">
       <div className="bg-muted/50 backdrop-blur-sm rounded-3xl overflow-hidden">
@@ -25,7 +29,7 @@ export function Sidebar({ categories, selectedCategory }: SidebarProps) {
                 : 'text-foreground hover:bg-background/60 hover:text-primary'
             }`}
           >
-            すべての商品
+            {t.products.allProductsLink}
             <ArrowUpRight className={`w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity ${!selectedCategory ? 'opacity-100' : ''}`} />
           </Link>
 

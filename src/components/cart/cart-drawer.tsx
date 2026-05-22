@@ -64,7 +64,7 @@ export function CartDrawer() {
               </div>
               <div>
                 <p className="font-semibold text-foreground">{t.cart.empty}</p>
-                <p className="text-sm text-muted-foreground mt-1">商品を追加してください</p>
+                <p className="text-sm text-muted-foreground mt-1">{t.cart.addItemsPrompt}</p>
               </div>
               <button onClick={closeCart} className="text-sm text-primary font-medium hover:underline">
                 {t.cart.continueShopping}
@@ -147,15 +147,15 @@ export function CartDrawer() {
 
             <div className="space-y-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">{t.cart.subtotal}（税抜）</span>
+                <span className="text-xs text-muted-foreground">{t.cart.subtotalExclTax}</span>
                 <span className="text-sm font-semibold">¥{subtotal.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">消費税（10%）</span>
+                <span className="text-xs text-muted-foreground">{t.cart.taxLine}</span>
                 <span className="text-sm font-semibold">¥{Math.round(subtotal * 0.1).toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between pt-1 border-t border-border/40">
-                <span className="text-sm text-muted-foreground font-medium">合計（税込・送料別）</span>
+                <span className="text-sm text-muted-foreground font-medium">{t.cart.totalInclTax}</span>
                 <span className="text-lg font-black text-foreground">¥{Math.round(subtotal * 1.1).toLocaleString()}</span>
               </div>
             </div>

@@ -41,7 +41,7 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
     <div className="flex flex-wrap gap-2 items-center">
       <input
         type="text"
-        placeholder="商品を検索…"
+        placeholder={p.searchPlaceholder}
         defaultValue={searchParams.get('search') ?? ''}
         className="border border-border bg-background rounded-xl px-3 py-2 text-sm flex-1 min-w-[160px] focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all placeholder:text-muted-foreground"
         onKeyDown={e => { if (e.key === 'Enter') updateParam('search', (e.target as HTMLInputElement).value) }}
@@ -69,7 +69,7 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
       </select>
       {hasFilters && (
         <a href={pathname} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive transition-colors px-2 py-2">
-          <X className="w-3.5 h-3.5" /> クリア
+          <X className="w-3.5 h-3.5" /> {p.clearFilters}
         </a>
       )}
     </div>
@@ -82,7 +82,7 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
         <div className="flex items-center justify-between gap-4">
           <FilterControls />
           {total !== undefined && (
-            <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">{total.toLocaleString('ja-JP')} 件</p>
+            <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">{total.toLocaleString()}{p.countSuffix}</p>
           )}
         </div>
       </div>
@@ -91,7 +91,7 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
       <div className="md:hidden mb-3">
         <div className="flex items-center justify-between gap-2">
           {total !== undefined && (
-            <p className="text-sm font-medium text-muted-foreground">{total.toLocaleString('ja-JP')} 件</p>
+            <p className="text-sm font-medium text-muted-foreground">{total.toLocaleString()}{p.countSuffix}</p>
           )}
           <div className="flex gap-2 ml-auto">
             <select
@@ -101,15 +101,15 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
             >
               <option value="newest">{p.sortNewest}</option>
               <option value="popular">{p.sortPopular}</option>
-              <option value="price_asc">価格 ↑</option>
-              <option value="price_desc">価格 ↓</option>
+              <option value="price_asc">{p.sortPriceAsc}</option>
+              <option value="price_desc">{p.sortPriceDesc}</option>
             </select>
             <button
               onClick={() => setMobileOpen(true)}
               className="flex items-center gap-1.5 border border-border bg-card rounded-xl px-3 py-2 text-sm font-medium hover:bg-accent transition-colors"
             >
               <SlidersHorizontal className="w-4 h-4" />
-              絞り込み
+              {p.filterTitle}
               {hasFilters && <span className="w-1.5 h-1.5 rounded-full bg-primary" />}
             </button>
           </div>
@@ -122,22 +122,22 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
           <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
           <div className="relative w-full max-w-sm bg-card rounded-3xl p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-bold text-lg" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.4rem' }}>絞り込み</h3>
+              <h3 className="font-bold text-lg" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.4rem' }}>{p.filterTitle}</h3>
               <button onClick={() => setMobileOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-muted">
                 <X className="w-4 h-4" />
               </button>
             </div>
             <div className="flex flex-col gap-3">
-              <label className="text-sm font-medium text-muted-foreground">キーワード検索</label>
+              <label className="text-sm font-medium text-muted-foreground">{p.searchLabel}</label>
               <input
                 ref={searchInputRef}
                 type="text"
-                placeholder="商品を検索…"
+                placeholder={p.searchPlaceholder}
                 defaultValue={searchParams.get('search') ?? ''}
                 className="border border-border bg-background rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 placeholder:text-muted-foreground"
                 onKeyDown={e => { if (e.key === 'Enter') { updateParam('search', (e.target as HTMLInputElement).value); setMobileOpen(false) } }}
               />
-              <label className="text-sm font-medium text-muted-foreground mt-1">カテゴリー</label>
+              <label className="text-sm font-medium text-muted-foreground mt-1">{p.categoryLabel}</label>
               <select
                 defaultValue={searchParams.get('category') ?? ''}
                 className="border border-border bg-background rounded-xl px-4 py-3 text-sm text-foreground"
@@ -150,10 +150,10 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
               </select>
               <div className="flex gap-3 mt-2">
                 <a href={pathname} className="flex-1 py-3 rounded-xl border border-border text-center text-sm font-medium text-muted-foreground hover:bg-muted transition-colors">
-                  クリア
+                  {p.clearFilters}
                 </a>
                 <button onClick={() => setMobileOpen(false)} className="flex-1 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-semibold shadow-sm active:scale-95 transition-transform">
-                  適用
+                  {p.applyFilters}
                 </button>
               </div>
             </div>

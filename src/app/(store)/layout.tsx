@@ -46,7 +46,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
                 {t.footer.tagline}
               </p>
               <div className="flex gap-2 flex-wrap">
-                {['全国配送', '翌日発送', '¥10,000以上送料無料'].map(tag => (
+                {t.footer.tags.map(tag => (
                   <span key={tag} className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/20 font-medium">
                     {tag}
                   </span>
@@ -93,7 +93,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
           <div className="border-t border-border/50">
             <div className="max-w-7xl mx-auto px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-2">
               <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Oishi Niku. All rights reserved.</p>
-              <p className="text-xs text-muted-foreground">プレミアム精肉をあなたのもとへ。</p>
+              <p className="text-xs text-muted-foreground">{t.footer.tagline2}</p>
             </div>
           </div>
         </footer>
