@@ -26,8 +26,8 @@ export function BestSellers({ products }: { products: Product[] }) {
                 {i + 1}
               </span>
               {p.image_url && (
-                <div className="relative w-7 h-7 flex-shrink-0">
-                  <Image src={p.image_url} alt={p.name} fill className="object-contain" />
+                <div className="relative w-7 h-7 flex-shrink-0 rounded-md overflow-hidden">
+                  <Image src={p.image_url} alt={p.name} fill className="object-cover" />
                 </div>
               )}
               <span
