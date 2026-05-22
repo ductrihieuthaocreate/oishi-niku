@@ -26,7 +26,7 @@ export function Logo({ size = 'md', showText = true }: LogoProps) {
           alt="Oishi Niku"
           width={Math.round(px * 0.7)}
           height={Math.round(px * 0.7)}
-          className="object-contain brightness-[10]"
+          className="object-contain brightness-0 invert"
           priority
         />
       </div>
