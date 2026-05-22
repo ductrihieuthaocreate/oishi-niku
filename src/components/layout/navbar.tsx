@@ -7,6 +7,7 @@ import { Search, ShoppingBag, ClipboardList, X, User, Menu } from 'lucide-react'
 import { useCart } from '@/lib/cart-context'
 import { useLang } from '@/lib/lang-context'
 import { LanguageSwitcher } from '@/components/language-switcher'
+import { Logo } from '@/components/logo'
 
 interface NavbarProps {
   customer?: { name: string } | null
@@ -70,12 +71,7 @@ export function Navbar({ customer }: NavbarProps) {
 
           {/* Logo — centered */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-            <span
-              className="font-serif text-3xl tracking-wider text-foreground"
-              style={{ fontFamily: 'var(--font-cormorant)' }}
-            >
-              Oishi Niku
-            </span>
+            <Logo size="md" />
           </Link>
 
           {/* Right actions */}

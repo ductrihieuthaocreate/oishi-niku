@@ -5,6 +5,7 @@ import { getCustomerSession } from '@/lib/session'
 import { Navbar } from '@/components/layout/navbar'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { CartDrawer } from '@/components/cart/cart-drawer'
+import { Logo } from '@/components/logo'
 
 export default async function StoreLayout({ children }: { children: React.ReactNode }) {
   const lang = await getLang()
@@ -23,8 +24,8 @@ export default async function StoreLayout({ children }: { children: React.ReactN
         {/* Mobile top bar */}
         <header className="md:hidden sticky top-0 z-40 bg-[rgba(255,255,255,0.6)] backdrop-blur-md border-b border-border/40 shadow-sm">
           <div className="flex items-center justify-between px-5 h-14">
-            <a href="/" className="font-serif text-xl tracking-wider text-foreground" style={{ fontFamily: 'var(--font-cormorant)' }}>
-              Oishi Niku
+            <a href="/">
+              <Logo size="sm" />
             </a>
           </div>
         </header>
@@ -36,12 +37,9 @@ export default async function StoreLayout({ children }: { children: React.ReactN
           <div className="max-w-7xl mx-auto px-8 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
             {/* Brand */}
             <div className="md:col-span-2">
-              <h3
-                className="font-serif text-3xl tracking-wider text-foreground mb-4"
-                style={{ fontFamily: 'var(--font-cormorant)' }}
-              >
-                Oishi Niku
-              </h3>
+              <a href="/" className="inline-block mb-4">
+                <Logo size="lg" />
+              </a>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mb-5">
                 {t.footer.tagline}
               </p>
