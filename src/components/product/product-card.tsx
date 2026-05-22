@@ -37,53 +37,58 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       <div className="relative bg-background rounded-3xl overflow-hidden go2go-shadow go2go-transition group-hover:scale-[1.02] h-full flex flex-col">
 
         {/* Image */}
-        <div className="relative aspect-square bg-card overflow-hidden">
-          {product.image_url ? (
-            <Image
-              src={product.image_url}
-              alt={product.name}
-              fill
-              priority={priority}
-              className="object-contain go2go-transition group-hover:scale-105 p-2"
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-muted-foreground/20">
-              <ShoppingBag className="w-12 h-12" />
+        <div className="relative p-3 pb-0">
+          <div className="relative aspect-square bg-card rounded-2xl overflow-hidden">
+            {product.image_url ? (
+              <Image
+                src={product.image_url}
+                alt={product.name}
+                fill
+                priority={priority}
+                className="object-contain go2go-transition group-hover:scale-105 p-3"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-muted-foreground/20">
+                <ShoppingBag className="w-12 h-12" />
+              </div>
+            )}
+
+            {/* Out of stock overlay */}
+            {!inStock && (
+              <div className="absolute inset-0 bg-background/70 backdrop-blur-[2px] flex items-center justify-center rounded-2xl">
+                <span className="bg-foreground/80 text-background text-[10px] font-medium px-3 py-1 rounded-full">
+                  {t.product.soldOut}
+                </span>
+              </div>
+            )}
+
+            {/* Badges */}
+            <div className="absolute top-2 left-2 right-2 flex items-start justify-between">
+              {inStock && product.sales_count >= 100 ? (
+                <span className="bg-white text-foreground text-[9px] font-semibold px-2.5 py-1 rounded-full go2go-shadow">
+                  {t.product.popular}
+                </span>
+              ) : <span />}
+
+              {inStock && product.is_featured && (
+                <span className="bg-accent text-foreground text-[9px] font-bold px-2.5 py-1 rounded-full go2go-shadow flex items-center gap-1">
+                  ★ {t.product.featuredBadge}
+                </span>
+              )}
             </div>
-          )}
 
-          {/* Out of stock overlay */}
-          {!inStock && (
-            <div className="absolute inset-0 bg-background/70 backdrop-blur-[2px] flex items-center justify-center">
-              <span className="bg-foreground/80 text-background text-[10px] font-medium px-3 py-1 rounded-full">
-                {t.product.soldOut}
-              </span>
-            </div>
-          )}
-
-          {/* Badge */}
-          {inStock && product.sales_count >= 100 && (
-            <span className="absolute top-3 left-3 bg-white text-foreground text-[9px] font-medium px-2.5 py-1 rounded-full go2go-shadow">
-              {t.product.popular}
-            </span>
-          )}
-          {inStock && product.is_featured && (
-            <span className="absolute top-3 right-3 bg-accent/20 text-foreground text-[9px] font-medium px-2.5 py-1 rounded-full">
-              {t.product.featuredBadge}
-            </span>
-          )}
-
-          {/* Quick add */}
-          {inStock && (
-            <button
-              onClick={handleAddToCart}
-              className="absolute bottom-0 inset-x-0 bg-primary text-primary-foreground font-medium text-xs py-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-1.5"
-            >
-              <ShoppingBag className="w-3.5 h-3.5" />
-              {t.product.quickAdd}
-            </button>
-          )}
+            {/* Quick add */}
+            {inStock && (
+              <button
+                onClick={handleAddToCart}
+                className="absolute bottom-0 inset-x-0 bg-primary/90 backdrop-blur-sm text-primary-foreground font-medium text-xs py-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-1.5 rounded-b-2xl"
+              >
+                <ShoppingBag className="w-3.5 h-3.5" />
+                {t.product.quickAdd}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Info */}

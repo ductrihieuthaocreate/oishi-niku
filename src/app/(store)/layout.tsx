@@ -6,6 +6,7 @@ import { Navbar } from '@/components/layout/navbar'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { CartDrawer } from '@/components/cart/cart-drawer'
 import { Logo } from '@/components/logo'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 export default async function StoreLayout({ children }: { children: React.ReactNode }) {
   const lang = await getLang()
@@ -27,6 +28,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
             <a href="/">
               <Logo size="sm" />
             </a>
+            <LanguageSwitcher />
           </div>
         </header>
 
