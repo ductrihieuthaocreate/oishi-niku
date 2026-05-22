@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 import { sql } from '@/lib/db'
 import { getLang, dict } from '@/lib/lang'
-import { HeroSection } from '@/components/home/hero-section'
 import { ProductCard } from '@/components/product/product-card'
 import { BestSellers } from '@/components/home/best-sellers'
 import { AnnouncementCarousel } from '@/components/home/announcement-carousel'
@@ -107,13 +106,11 @@ export default async function HomePage({ searchParams }: PageProps) {
 
   const page = Number(params.page ?? 1)
   const totalPages = Math.ceil(total / PAGE_SIZE)
-  const isLanding = !params.search && !params.category && !params.sort && page === 1
 
   return (
     <div className="w-full">
       {/* ── DESKTOP LAYOUT ── */}
       <div className="hidden md:block w-full px-4 mx-auto max-w-7xl">
-        {isLanding && <HeroSection categories={categories as any} />}
         <div className="mt-6 pb-16">
           <Suspense><AnnouncementCarousel /></Suspense>
           <div className="flex gap-6">
@@ -144,12 +141,6 @@ export default async function HomePage({ searchParams }: PageProps) {
         <div className="px-4 pt-3">
           <Suspense><AnnouncementCarousel /></Suspense>
         </div>
-
-        {isLanding && (
-          <div className="px-4 mb-4">
-            <HeroSection categories={categories as any} />
-          </div>
-        )}
 
         <div className="px-4">
           <Suspense><ProductFilters categories={categories} total={total} /></Suspense>
