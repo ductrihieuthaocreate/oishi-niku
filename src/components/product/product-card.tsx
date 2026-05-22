@@ -34,7 +34,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
   return (
     <Link href={`/products/${product.id}`} className="block group">
-      <div className="relative bg-background rounded-3xl overflow-hidden go2go-shadow go2go-transition group-hover:scale-[1.02] h-full flex flex-col">
+      <div className="relative rounded-3xl overflow-hidden go2go-shadow go2go-transition group-hover:scale-[1.02] h-full flex flex-col" style={{ background: 'oklch(0.99 0.004 80)' }}>
 
         {/* Image */}
         <div className="relative p-3 pb-0">
