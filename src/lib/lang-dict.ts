@@ -3,6 +3,7 @@ export type Lang = 'ja' | 'en'
 export const dict = {
   ja: {
     nav: { home: 'ホーム', shop: 'ショップ', searchPlaceholder: '商品を検索…', cartLabel: 'カート', accountLabel: 'マイページ' },
+    categoryNames: { beef: '牛肉', chicken: '鶏肉', pork: '豚肉' } as Record<string, string>,
     hero: {
       eyebrow: '冷凍肉卸売業者',
       title1: '冷凍肉',
@@ -314,6 +315,7 @@ export const dict = {
 
   en: {
     nav: { home: 'Home', shop: 'Shop', searchPlaceholder: 'Search products…', cartLabel: 'Cart', accountLabel: 'Account' },
+    categoryNames: { beef: 'Beef', chicken: 'Chicken', pork: 'Pork' } as Record<string, string>,
     hero: {
       eyebrow: 'Frozen Meat Wholesaler',
       title1: 'Frozen',

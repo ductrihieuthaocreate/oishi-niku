@@ -54,7 +54,7 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
       >
         <option value="">{p.allCategories}</option>
         {categories.map(cat => (
-          <option key={cat.id} value={cat.slug}>{cat.name}</option>
+          <option key={cat.id} value={cat.slug}>{t.categoryNames[cat.slug] ?? cat.name}</option>
         ))}
       </select>
       <select
@@ -145,7 +145,7 @@ export function ProductFilters({ categories, total }: ProductFiltersProps) {
               >
                 <option value="">{p.allCategories}</option>
                 {categories.map(cat => (
-                  <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                  <option key={cat.id} value={cat.slug}>{t.categoryNames[cat.slug] ?? cat.name}</option>
                 ))}
               </select>
               <div className="flex gap-3 mt-2">

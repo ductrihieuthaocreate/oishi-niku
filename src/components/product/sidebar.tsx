@@ -45,7 +45,7 @@ export function Sidebar({ categories, selectedCategory }: SidebarProps) {
                     : 'text-foreground hover:bg-background/60 hover:text-primary'
                 }`}
               >
-                {cat.name}
+                {t.categoryNames[cat.slug] ?? cat.name}
                 <ArrowUpRight className={`w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity ${isActive ? 'opacity-100' : ''}`} />
               </Link>
             )

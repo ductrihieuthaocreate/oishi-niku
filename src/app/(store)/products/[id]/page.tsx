@@ -80,7 +80,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
         <div className="space-y-6">
           {product.categories && (
-            <p className="text-primary font-medium tracking-widest uppercase text-sm">{product.categories.name}</p>
+            <p className="text-primary font-medium tracking-widest uppercase text-sm">{t.categoryNames[product.categories.slug] ?? product.categories.name}</p>
           )}
           <h1 className="font-heading text-4xl lg:text-5xl tracking-wider text-foreground">{product.name}</h1>
 

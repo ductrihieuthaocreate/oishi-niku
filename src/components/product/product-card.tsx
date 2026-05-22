@@ -97,7 +97,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             <p className="text-[10px] text-muted-foreground tracking-wider font-mono">{product.grade}</p>
           )}
           {!product.grade && product.categories && (
-            <p className="text-[10px] text-muted-foreground tracking-wider uppercase">{product.categories.name}</p>
+            <p className="text-[10px] text-muted-foreground tracking-wider uppercase">{t.categoryNames[product.categories.slug] ?? product.categories.name}</p>
           )}
           <h3
             className="font-serif text-base text-foreground leading-snug go2go-transition group-hover:text-primary/80"

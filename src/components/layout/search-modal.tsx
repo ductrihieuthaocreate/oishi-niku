@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { Search, X, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { formatPrice } from '@/lib/utils'
+import { useLang } from '@/lib/lang-context'
 import type { Product } from '@/lib/types'
 
 interface SearchModalProps {
@@ -15,6 +16,7 @@ interface SearchModalProps {
 }
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
+  const { t } = useLang()
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -122,7 +124,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-foreground truncate">{product.name}</p>
-                          {product.categories && <p className="text-xs text-muted-foreground">{product.categories.name}</p>}
+                          {product.categories && <p className="text-xs text-muted-foreground">{t.categoryNames[product.categories.slug] ?? product.categories.name}</p>}
                         </div>
                         <span className="text-primary font-semibold text-sm">{formatPrice(product.price)}</span>
                       </Link>
