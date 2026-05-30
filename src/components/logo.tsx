@@ -9,34 +9,32 @@ export function Logo({ size = 'md', showText = true }: LogoProps) {
   const dims = { sm: 32, md: 40, lg: 52 }
   const px = dims[size]
   const textSizes = {
-    sm: { brand: 'text-base', sub: 'text-[7px]' },
-    md: { brand: 'text-xl',   sub: 'text-[8px]' },
-    lg: { brand: 'text-2xl',  sub: 'text-[9px]' },
+    sm: { brand: 'text-[15px]', sub: 'text-[7px]' },
+    md: { brand: 'text-[18px]', sub: 'text-[8px]' },
+    lg: { brand: 'text-[22px]', sub: 'text-[9px]' },
   }
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-shrink-0" style={{ width: px, height: px }}>
-        <Image
-          src="/oishi-logo.png"
-          alt="Oishi Niku"
-          width={px}
-          height={px}
-          className="object-contain"
-          priority
-        />
-      </div>
+      <Image
+        src="/oishi-logo.png"
+        alt="Oishi Niku"
+        width={px}
+        height={px}
+        className="object-contain flex-shrink-0"
+        priority
+      />
 
       {showText && (
-        <div className="flex flex-col leading-none gap-0.5">
+        <div className="flex flex-col justify-center">
           <span
-            className={`font-serif font-semibold tracking-[0.12em] text-foreground ${textSizes[size].brand}`}
+            className={`font-serif font-semibold tracking-[0.08em] text-foreground leading-tight ${textSizes[size].brand}`}
             style={{ fontFamily: 'var(--font-cormorant)' }}
           >
             Oishi Niku
           </span>
           <span
-            className={`tracking-[0.25em] text-muted-foreground uppercase font-medium ${textSizes[size].sub}`}
+            className={`tracking-[0.22em] text-muted-foreground uppercase font-medium leading-tight ${textSizes[size].sub}`}
           >
             Premium Meats
           </span>
