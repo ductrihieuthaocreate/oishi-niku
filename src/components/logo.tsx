@@ -6,7 +6,7 @@ interface LogoProps {
 }
 
 export function Logo({ size = 'md', showText = true }: LogoProps) {
-  const dims = { sm: 28, md: 36, lg: 48 }
+  const dims = { sm: 32, md: 40, lg: 52 }
   const px = dims[size]
   const textSizes = {
     sm: { brand: 'text-base', sub: 'text-[7px]' },
@@ -15,23 +15,18 @@ export function Logo({ size = 'md', showText = true }: LogoProps) {
   }
 
   return (
-    <div className="flex items-center gap-2.5">
-      {/* Icon badge */}
-      <div
-        className="rounded-xl flex items-center justify-center flex-shrink-0 bg-primary shadow-sm"
-        style={{ width: px, height: px }}
-      >
+    <div className="flex items-center gap-2">
+      <div className="flex-shrink-0" style={{ width: px, height: px }}>
         <Image
-          src="/meat.png"
+          src="/oishi-logo.png"
           alt="Oishi Niku"
-          width={Math.round(px * 0.7)}
-          height={Math.round(px * 0.7)}
-          className="object-contain brightness-0 invert"
+          width={px}
+          height={px}
+          className="object-contain"
           priority
         />
       </div>
 
-      {/* Text lockup */}
       {showText && (
         <div className="flex flex-col leading-none gap-0.5">
           <span
