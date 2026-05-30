@@ -507,15 +507,6 @@ export default function CheckoutPage() {
                 <p className="text-xs text-muted-foreground mt-0.5">{tc.bankDesc}</p>
               </div>
             </label>
-            {paymentMethod === 'bank' && (
-              <div className="bg-primary/5 border border-primary/20 rounded-2xl px-4 py-3">
-                <p className="text-xs font-bold text-primary mb-1">{tc.bankNoteTitle}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {tc.bankNoteDesc}<br />
-                  {tc.qtyLabel.trim() && ''}<span className="font-mono bg-background px-1 rounded border border-border">ORDER-123</span> {tc.bankNoteExample}
-                </p>
-              </div>
-            )}
           </div>
         </div>
 
