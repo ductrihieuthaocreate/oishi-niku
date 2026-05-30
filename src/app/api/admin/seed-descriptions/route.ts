@@ -61,10 +61,10 @@ export async function GET(req: NextRequest) {
     const result = await sql`
       UPDATE products SET description = ${desc}
       WHERE name ILIKE ${'%' + keyword + '%'}
-        AND (description IS NULL OR description = '')
+      RETURNING id
     `
-    const count = (result as any).count ?? (Array.isArray(result) ? result.length : 0)
-    if (count > 0) updated++
+    const rows = Array.isArray(result) ? result : (result as any).rows ?? []
+    if (rows.length > 0) updated += rows.length
     else skipped++
   }
 
