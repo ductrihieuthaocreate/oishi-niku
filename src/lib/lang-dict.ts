@@ -520,7 +520,7 @@ export const dict = {
       bankNoteExample: 'for example.',
       bankYuchoTitle: 'Transfer from Yucho Bank',
       bankOtherTitle: 'Transfer from Other Banks',
-      bankHolder: 'Do Nhu Quoc Yon',
+      bankHolder: 'DO NHU QUOC DUNG',
       bankYuchoNumber: '10340-72447231',
       bankOtherBranch: 'Zerosanpachi (038)',
       bankOtherNumber: '72447231',
