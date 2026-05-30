@@ -510,6 +510,52 @@ export default function CheckoutPage() {
           </div>
         </div>
 
+        {/* ── Bank details (shown when bank is selected) ── */}
+        {paymentMethod === 'bank' && (
+          <div className="bg-card border border-primary/30 rounded-3xl p-5 space-y-4">
+            <div className="flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-primary" />
+              <h2 className="font-bold text-sm text-foreground">{tc.bankTransferTitle}</h2>
+            </div>
+
+            <div>
+              <p className="text-[11px] font-bold text-primary uppercase tracking-wide mb-2">{tc.bankYuchoTitle}</p>
+              <div className="bg-background rounded-2xl border border-border overflow-hidden text-xs">
+                {([
+                  { label: tc.bankRowBankName, value: 'ゆうちょ銀行' },
+                  { label: tc.bankRowHolder,   value: tc.bankHolder },
+                  { label: tc.bankRowAccountNum, value: tc.bankYuchoNumber },
+                ] as {label:string;value:string}[]).map(({ label, value }) => (
+                  <div key={label} className="flex justify-between px-3 py-2 border-b border-border last:border-0">
+                    <span className="text-muted-foreground">{label}</span>
+                    <span className="font-bold text-foreground font-mono">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[11px] font-bold text-primary uppercase tracking-wide mb-2">{tc.bankOtherTitle}</p>
+              <div className="bg-background rounded-2xl border border-border overflow-hidden text-xs">
+                {([
+                  { label: tc.bankRowBankName,   value: 'ゆうちょ銀行' },
+                  { label: tc.bankRowHolder,     value: tc.bankHolder },
+                  { label: tc.bankRowAccountNum, value: tc.bankOtherNumber },
+                  { label: tc.bankRowBranchCode, value: tc.bankOtherBranch },
+                  { label: '預金種別',            value: tc.bankOtherType },
+                ] as {label:string;value:string}[]).map(({ label, value }) => (
+                  <div key={label} className="flex justify-between px-3 py-2 border-b border-border last:border-0">
+                    <span className="text-muted-foreground">{label}</span>
+                    <span className="font-bold text-foreground font-mono">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-xs text-muted-foreground leading-relaxed bg-primary/5 rounded-xl px-3 py-2">{tc.bankFanpageNote}</p>
+          </div>
+        )}
+
         {/* ── Order summary ── */}
         <div className="bg-card rounded-3xl border border-border/60 shadow-sm overflow-hidden">
           <div className="px-5 py-4 border-b border-border/40">
