@@ -82,8 +82,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             {inStock && product.stars && product.stars > 0 && (
               <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2">
                 <div className="bg-white/90 backdrop-blur-sm px-1.5 rounded-full go2go-shadow flex items-center" style={{ height: '14px' }}>
-                  <span className="text-yellow-400 text-[8px] leading-none tracking-tight block" style={{ lineHeight: 1 }}>
-                    {'★'.repeat(product.stars)}{'☆'.repeat(5 - product.stars)}
+                  <span className="text-[8px] leading-none tracking-tight block" style={{ lineHeight: 1 }}>
+                    <span className="mr-0.5">😋</span><span className="text-yellow-400">{'★'.repeat(product.stars)}{'☆'.repeat(5 - product.stars)}</span>
                   </span>
                 </div>
               </div>
