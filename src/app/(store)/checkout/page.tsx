@@ -245,34 +245,51 @@ export default function CheckoutPage() {
         </div>
 
         {paymentMethod === 'bank' && (
-          <div className="bg-card border border-border rounded-3xl p-6 mb-6">
-            <div className="flex items-center gap-2 mb-4">
+          <div className="bg-card border border-border rounded-3xl p-6 mb-6 space-y-4">
+            <div className="flex items-center gap-2">
               <Building2 className="w-5 h-5 text-primary" />
               <h2 className="font-bold text-foreground">{tc.bankTransferTitle}</h2>
             </div>
-            <p className="text-sm text-muted-foreground mb-4">
-              {tc.bankTransferAmountPre}<strong className="text-foreground">¥{finalTotal.toLocaleString()}</strong>{tc.bankTransferAmountPost}
-            </p>
-            <div className="bg-background rounded-2xl border border-border overflow-hidden text-sm">
-              {[
-                { label: tc.bankRowBankName,    value: 'ご利用の銀行名' },
-                { label: tc.bankRowHolder,      value: '口座名義を入力' },
-                { label: tc.bankRowAccountNum,  value: '1234-5678-9012' },
-                { label: tc.bankRowBranchCode,  value: '001' },
-                { label: tc.bankRowTransferRef, value: `ORDER-${orderId}` },
-                { label: tc.bankRowAmount,      value: `¥${finalTotal.toLocaleString()}` },
-              ].map(({ label, value }) => (
-                <div key={label} className="flex justify-between px-4 py-2.5 border-b border-border last:border-0">
-                  <span className="text-muted-foreground font-medium">{label}</span>
-                  <span className="font-bold text-foreground">{value}</span>
-                </div>
-              ))}
+
+            {/* From Yucho Bank */}
+            <div>
+              <p className="text-xs font-bold text-primary uppercase tracking-wide mb-2">{tc.bankYuchoTitle}</p>
+              <div className="bg-background rounded-2xl border border-border overflow-hidden text-sm">
+                {[
+                  { label: tc.bankRowBankName,   value: 'ゆうちょ銀行' },
+                  { label: tc.bankRowHolder,     value: tc.bankHolder },
+                  { label: tc.bankRowAccountNum, value: tc.bankYuchoNumber },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex justify-between px-4 py-2.5 border-b border-border last:border-0">
+                    <span className="text-muted-foreground font-medium">{label}</span>
+                    <span className="font-bold text-foreground font-mono">{value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="mt-4 bg-primary/5 border border-primary/20 rounded-2xl px-4 py-3">
-              <p className="text-xs font-bold text-primary mb-1">{tc.bankRefNoticeTitle}</p>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {tc.bankRefNoticeBody}<strong className="text-foreground">{' '}「ORDER-{orderId}」{' '}</strong>{tc.bankRefNoticePost}
-              </p>
+
+            {/* From Other Banks */}
+            <div>
+              <p className="text-xs font-bold text-primary uppercase tracking-wide mb-2">{tc.bankOtherTitle}</p>
+              <div className="bg-background rounded-2xl border border-border overflow-hidden text-sm">
+                {[
+                  { label: tc.bankRowBankName,   value: 'ゆうちょ銀行' },
+                  { label: tc.bankRowHolder,     value: tc.bankHolder },
+                  { label: tc.bankRowAccountNum, value: tc.bankOtherNumber },
+                  { label: tc.bankRowBranchCode, value: tc.bankOtherBranch },
+                  { label: '預金種別',            value: tc.bankOtherType },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex justify-between px-4 py-2.5 border-b border-border last:border-0">
+                    <span className="text-muted-foreground font-medium">{label}</span>
+                    <span className="font-bold text-foreground font-mono">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Fanpage note */}
+            <div className="bg-primary/5 border border-primary/20 rounded-2xl px-4 py-3">
+              <p className="text-xs text-foreground leading-relaxed">{tc.bankFanpageNote}</p>
             </div>
           </div>
         )}
