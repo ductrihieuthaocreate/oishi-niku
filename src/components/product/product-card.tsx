@@ -37,7 +37,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       <div className="relative rounded-3xl overflow-hidden go2go-shadow go2go-transition group-hover:scale-[1.02] h-full flex flex-col" style={{ background: 'oklch(0.99 0.004 80)' }}>
 
         {/* Image */}
-        <div className="relative p-3 pb-0">
+        <div className="relative p-2 pb-0">
           <div className="relative aspect-square bg-card rounded-2xl overflow-hidden">
             {product.image_url ? (
               <Image
@@ -80,8 +80,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
             {/* Star rating — only shown if manually set in admin */}
             {inStock && product.stars && product.stars > 0 && (
-              <div className="absolute bottom-2 left-2">
-                <div className="bg-white/85 backdrop-blur-sm px-1.5 py-0.5 rounded-full go2go-shadow">
+              <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2">
+                <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full go2go-shadow">
                   <span className="text-yellow-400 text-[9px] leading-none tracking-tight">
                     {'★'.repeat(product.stars)}{'☆'.repeat(5 - product.stars)}
                   </span>
