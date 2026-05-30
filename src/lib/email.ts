@@ -1,5 +1,5 @@
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? 'admin@oishi-niku.com'
-const FROM_EMAIL = 'Oishi Niku <noreply@oishi-niku.com>'
+const FROM_EMAIL = process.env.FROM_EMAIL ?? 'Oishi Niku <onboarding@resend.dev>'
 
 interface EmailItem {
   name: string
