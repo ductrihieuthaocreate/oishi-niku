@@ -1,15 +1,21 @@
 import { Suspense } from 'react'
+import { unstable_cache } from 'next/cache'
+import dynamic from 'next/dynamic'
 import { sql } from '@/lib/db'
 import { getLang, dict } from '@/lib/lang'
 import { ProductCard } from '@/components/product/product-card'
 import { BestSellers } from '@/components/home/best-sellers'
-import { AnnouncementCarousel } from '@/components/home/announcement-carousel'
 import { Sidebar } from '@/components/product/sidebar'
 import { ProductFilters } from '@/components/product/product-filters'
 import { Pagination } from '@/components/product/pagination'
 import type { Product, Category } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
+
+const AnnouncementCarousel = dynamic(
+  () => import('@/components/home/announcement-carousel').then(m => m.AnnouncementCarousel),
+  { ssr: false }
+)
 
 const PAGE_SIZE = 24
 
@@ -23,10 +29,14 @@ interface PageProps {
   }>
 }
 
-async function getCategories(): Promise<Category[]> {
-  const rows = await sql`SELECT * FROM categories ORDER BY name`
-  return rows as unknown as Category[]
-}
+const getCategories = unstable_cache(
+  async (): Promise<Category[]> => {
+    const rows = await sql`SELECT * FROM categories ORDER BY name`
+    return rows as unknown as Category[]
+  },
+  ['categories'],
+  { revalidate: 300 }
+)
 
 async function getProducts(params: Awaited<PageProps['searchParams']>) {
   const page = Number(params.page ?? 1)
@@ -82,16 +92,20 @@ async function getProducts(params: Awaited<PageProps['searchParams']>) {
   return { products, total }
 }
 
-async function getBestSellers(): Promise<Product[]> {
-  const rows = await sql`
-    SELECT p.*, p.price::float8 AS price
-    FROM products p
-    WHERE p.stock > 0
-    ORDER BY p.sales_count DESC
-    LIMIT 5
-  `
-  return rows as unknown as Product[]
-}
+const getBestSellers = unstable_cache(
+  async (): Promise<Product[]> => {
+    const rows = await sql`
+      SELECT p.*, p.price::float8 AS price
+      FROM products p
+      WHERE p.stock > 0
+      ORDER BY p.sales_count DESC
+      LIMIT 5
+    `
+    return rows as unknown as Product[]
+  },
+  ['best-sellers'],
+  { revalidate: 120 }
+)
 
 export default async function HomePage({ searchParams }: PageProps) {
   const params = await searchParams
