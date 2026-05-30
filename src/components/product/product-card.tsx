@@ -78,6 +78,18 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
               )}
             </div>
 
+            {/* Star rating */}
+            {inStock && (
+              <div className="absolute bottom-2 left-2">
+                <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full go2go-shadow">
+                  <span className="text-yellow-400 text-[11px] leading-none">
+                    {'★'.repeat(product.is_featured ? 5 : product.sales_count >= 30 ? 4 : 3)}
+                    {'☆'.repeat(product.is_featured ? 0 : product.sales_count >= 30 ? 1 : 2)}
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* Quick add */}
             {inStock && (
               <button

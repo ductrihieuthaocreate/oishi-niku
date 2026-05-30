@@ -14,12 +14,11 @@ export const dict = {
       marquee: ['冷凍', '大口注文', 'B2B', '卸売', '牛肉', '豚肉', '鶏肉', '冷凍供給', '信頼性', 'バルクカット', 'コールドチェーン', 'OISHI NIKU'],
     },
     home: {
-      bestSellersTitle: '🏆 人気商品',
+      bestSellersTitle: '🏆 Bán chạy',
       carouselSlides: [
-        { icon: '🚚', title: '¥10,000以上で送料無料', sub: '全国一律配送対応', badge: '自動適用' },
-        { icon: '🥩', title: '厳選和牛・プレミアム精肉', sub: 'HACCP認証の高品質商品が揃っています', badge: '品質保証' },
-        { icon: '📦', title: '翌日発送対応', sub: '平日14時までのご注文は当日出荷', badge: '迅速対応' },
-        { icon: '❄️', title: 'コールドチェーン完備', sub: '鮮度を保ったままお届けします', badge: '冷凍配送' },
+        { icon: '🚚', title: 'Kiện 24-28kg miễn ship', sub: 'Đặt hàng từ 24-28kg được miễn phí vận chuyển toàn quốc', badge: 'Miễn Ship' },
+        { icon: '🛡️', title: 'Đảm bảo an toàn vệ sinh thực phẩm', sub: 'Sản phẩm đạt tiêu chuẩn an toàn vệ sinh quốc tế', badge: 'Chứng nhận' },
+        { icon: '📦', title: 'Đóng gói & nhãn mác đúng quy định', sub: 'Bao bì và nhãn mác đạt chuẩn theo quy định', badge: 'Đạt chuẩn' },
       ],
       featuredEyebrow: '商品ラインナップ',
       featuredTitle: '取扱商品',
@@ -328,10 +327,9 @@ export const dict = {
     home: {
       bestSellersTitle: '🏆 Best Sellers',
       carouselSlides: [
-        { icon: '🚚', title: 'Free Shipping on ¥10,000+', sub: 'Nationwide flat-rate delivery', badge: 'Auto Applied' },
-        { icon: '🥩', title: 'Premium Wagyu & Select Meats', sub: 'HACCP-certified, top-quality products', badge: 'Quality Assured' },
-        { icon: '📦', title: 'Next-Day Dispatch', sub: 'Order before 2 PM on weekdays for same-day shipment', badge: 'Fast Delivery' },
-        { icon: '❄️', title: 'Full Cold Chain', sub: 'Delivered fresh, frozen to your door', badge: 'Cold Frozen' },
+        { icon: '🚚', title: 'Free Shipping on 24-28kg Orders', sub: 'Orders from 24-28kg qualify for free nationwide delivery', badge: 'Free Ship' },
+        { icon: '🛡️', title: 'Food Safety Guaranteed', sub: 'All products meet international food safety standards', badge: 'Certified' },
+        { icon: '📦', title: 'Compliant Packaging & Labeling', sub: 'All packaging and labels meet regulatory requirements', badge: 'Compliant' },
       ],
       featuredEyebrow: 'Product Lineup',
       featuredTitle: 'Our Products',
