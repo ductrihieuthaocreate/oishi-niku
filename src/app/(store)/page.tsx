@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { unstable_cache } from 'next/cache'
-import dynamic from 'next/dynamic'
+import lazyLoad from 'next/dynamic'
 import { sql } from '@/lib/db'
 import { getLang, dict } from '@/lib/lang'
 import { ProductCard } from '@/components/product/product-card'
@@ -12,7 +12,7 @@ import type { Product, Category } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
-const AnnouncementCarousel = dynamic(
+const AnnouncementCarousel = lazyLoad(
   () => import('@/components/home/announcement-carousel').then(m => m.AnnouncementCarousel),
   { ssr: false }
 )
