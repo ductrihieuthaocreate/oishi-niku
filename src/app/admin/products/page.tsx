@@ -86,9 +86,9 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
           className="bg-card border border-border rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
         >
           <option value="">All Status</option>
-          <option value="featured">â­ Featured</option>
-          <option value="low">âš  Low Stock (â‰¤5)</option>
-          <option value="out">âœ• Out of Stock</option>
+          <option value="featured">★ Featured</option>
+          <option value="low">⚠ Low Stock (≤5)</option>
+          <option value="out">✕ Out of Stock</option>
         </select>
         <button
           type="submit"
@@ -158,7 +158,7 @@ export default async function AdminProductsPage({ searchParams }: PageProps) {
                         </div>
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell">
-                        <span className="text-sm text-muted-foreground">{product.categories?.name ?? 'â€"'}</span>
+                        <span className="text-sm text-muted-foreground">{product.categories?.name ?? '—'}</span>
                       </td>
                       <td className="px-4 py-3">
                         <span className="font-semibold text-primary text-sm">{formatPrice(product.price)}</span>
