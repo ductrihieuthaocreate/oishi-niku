@@ -81,8 +81,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
             {/* Star rating — only shown if manually set in admin */}
             {inStock && product.stars && product.stars > 0 && (
               <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2">
-                <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full go2go-shadow">
-                  <span className="text-yellow-400 text-[9px] leading-none tracking-tight">
+                <div className="bg-white/90 backdrop-blur-sm px-1.5 py-px rounded-full go2go-shadow">
+                  <span className="text-yellow-400 text-[8px] leading-[1] tracking-tight">
                     {'★'.repeat(product.stars)}{'☆'.repeat(5 - product.stars)}
                   </span>
                 </div>
