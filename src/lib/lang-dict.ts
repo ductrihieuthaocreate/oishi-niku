@@ -14,11 +14,11 @@ export const dict = {
       marquee: ['冷凍', '大口注文', 'B2B', '卸売', '牛肉', '豚肉', '鶏肉', '冷凍供給', '信頼性', 'バルクカット', 'コールドチェーン', 'OISHI NIKU'],
     },
     home: {
-      bestSellersTitle: '🏆 Bán chạy',
+      bestSellersTitle: '🏆 人気商品',
       carouselSlides: [
-        { icon: '🚚', title: 'Kiện 24-28kg miễn ship', sub: 'Đặt hàng từ 24-28kg được miễn phí vận chuyển toàn quốc', badge: 'Miễn Ship' },
-        { icon: '🛡️', title: 'Đảm bảo an toàn vệ sinh thực phẩm', sub: 'Sản phẩm đạt tiêu chuẩn an toàn vệ sinh quốc tế', badge: 'Chứng nhận' },
-        { icon: '📦', title: 'Đóng gói & nhãn mác đúng quy định', sub: 'Bao bì và nhãn mác đạt chuẩn theo quy định', badge: 'Đạt chuẩn' },
+        { icon: '🚚', title: '24〜28kgの箱で送料無料', sub: '24〜28kgまとめてご注文で全国送料無料', badge: '自動適用' },
+        { icon: '🛡️', title: '食品衛生・安全を保証', sub: '国際食品衛生基準をクリアした高品質商品', badge: '品質保証' },
+        { icon: '📦', title: '適切な包装・ラベル表示', sub: '規定に沿った包装・ラベリングを徹底実施', badge: '規定準拠' },
       ],
       featuredEyebrow: '商品ラインナップ',
       featuredTitle: '取扱商品',

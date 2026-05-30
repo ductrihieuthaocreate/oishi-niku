@@ -33,42 +33,55 @@ export function AnnouncementCarousel() {
   return (
     <div className={`relative w-full rounded-2xl overflow-hidden bg-gradient-to-r ${bg} mb-4 transition-all duration-700`}>
       <div className="flex items-stretch">
+        {/* Left arrow */}
         <button
           onClick={() => go(-1)}
-          className="flex-shrink-0 w-9 flex items-center justify-center text-white/60 hover:text-white hover:bg-black/20 transition-colors"
+          className="flex-shrink-0 w-8 flex items-center justify-center text-white/50 hover:text-white hover:bg-black/20 transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
 
-        <div className="flex-1 min-w-0 overflow-hidden">
+        {/* Slide content */}
+        <div className="flex-1 min-w-0 overflow-hidden py-5 pb-7">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={index}
               custom={direction}
-              initial={{ x: direction * 50, opacity: 0 }}
+              initial={{ x: direction * 40, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              exit={{ x: direction * -50, opacity: 0 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="flex flex-col items-center text-center px-4 py-5 gap-1.5"
+              exit={{ x: direction * -40, opacity: 0 }}
+              transition={{ duration: 0.28, ease: 'easeOut' }}
+              className="flex items-center gap-3"
             >
-              <span className="text-2xl mb-0.5">{slide.icon}</span>
-              <p className="font-black text-white text-sm leading-snug">{slide.title}</p>
-              <p className="text-white/75 text-xs leading-snug max-w-xs">{slide.sub}</p>
-              <span className="mt-1 text-white text-[10px] font-bold px-3 py-0.5 rounded-full border border-white/30 bg-white/20">
+              {/* Icon */}
+              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-white/10 rounded-xl">
+                <span className="text-xl">{slide.icon}</span>
+              </div>
+
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <p className="font-black text-white text-sm leading-tight">{slide.title}</p>
+                <p className="text-white/70 text-[11px] mt-0.5 leading-snug">{slide.sub}</p>
+              </div>
+
+              {/* Badge */}
+              <span className="flex-shrink-0 text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/30 bg-white/15 whitespace-nowrap">
                 {slide.badge}
               </span>
             </motion.div>
           </AnimatePresence>
         </div>
 
+        {/* Right arrow */}
         <button
           onClick={() => go(1)}
-          className="flex-shrink-0 w-9 flex items-center justify-center text-white/60 hover:text-white hover:bg-black/20 transition-colors"
+          className="flex-shrink-0 w-8 flex items-center justify-center text-white/50 hover:text-white hover:bg-black/20 transition-colors"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
 
+      {/* Dots */}
       <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex gap-1">
         {slides.map((_, i) => (
           <button
