@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { formatPrice, formatDate } from '@/lib/utils'
-import { updateOrderStatus } from './actions'
+import { updateOrderStatus, confirmPayment } from './actions'
 import { DeleteOrderButton } from './delete-button'
 import type { Order } from '@/lib/types'
 
@@ -115,6 +115,20 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
           </div>
         </div>
       </div>
+
+      {o.payment_method === 'bank' && o.status === 'pending' && (
+        <div className="bg-primary/5 border border-primary/30 rounded-xl p-5 mb-6 flex items-center justify-between gap-4">
+          <div>
+            <p className="font-semibold text-foreground text-sm">Bank Transfer Payment</p>
+            <p className="text-xs text-muted-foreground mt-0.5">Confirm receipt and notify the customer via email</p>
+          </div>
+          <form action={confirmPayment.bind(null, o.id)}>
+            <button type="submit" className="flex-shrink-0 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-colors">
+              ✓ Confirm Payment
+            </button>
+          </form>
+        </div>
+      )}
 
       <div className="bg-card border border-border rounded-xl p-6">
         <h3 className="font-heading tracking-wider text-foreground mb-4 text-sm uppercase">Update Order Status</h3>

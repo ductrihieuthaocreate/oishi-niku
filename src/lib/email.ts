@@ -92,6 +92,26 @@ export async function sendCustomerConfirmation(order: OrderEmailData) {
     </div>`)
 }
 
+export async function sendPaymentConfirmation(data: {
+  orderId: number
+  customerEmail: string
+  customerName: string
+  total: number
+}) {
+  await send(data.customerEmail, `Payment Confirmed — Order #${data.orderId}`, `
+    <div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#0A0A0A;color:#F5F5F5;padding:32px;border-radius:12px;">
+      <h1 style="color:#FF5C35;font-size:28px;margin-bottom:8px;">Payment Confirmed! ✅</h1>
+      <p>Hi ${data.customerName}, we have received your bank transfer for order <strong>#${data.orderId}</strong>.</p>
+      <div style="background:#1A1A1A;border:1px solid #333;border-radius:8px;padding:16px;margin:24px 0;">
+        <p style="color:#888;margin:0 0 4px;">Order Total</p>
+        <p style="color:#FF5C35;font-size:24px;font-weight:bold;margin:0;">${formatPrice(data.total)}</p>
+      </div>
+      <p>Your order is now being processed and will be shipped soon. We will send you another email with tracking information once your order ships.</p>
+      <hr style="border-color:#222;margin:24px 0;"/>
+      <p style="color:#FF5C35;font-size:16px;font-weight:bold;">Oishi Niku — Premium Meat</p>
+    </div>`)
+}
+
 export async function sendShippingNotification(data: {
   orderId: number
   customerEmail: string

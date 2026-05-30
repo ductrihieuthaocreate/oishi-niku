@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { sql } from '@/lib/db'
-import { sendShippingNotification } from '@/lib/email'
+import { sendShippingNotification, sendPaymentConfirmation } from '@/lib/email'
 
 export async function updateOrderStatus(orderId: number, formData: FormData) {
   const status = formData.get('status') as string
@@ -30,6 +30,28 @@ export async function updateOrderStatus(orderId: number, formData: FormData) {
       }).catch(() => {})
     }
   }
+
+  revalidatePath(`/admin/orders/${orderId}`)
+  revalidatePath('/admin/orders')
+  redirect(`/admin/orders/${orderId}`)
+}
+
+export async function confirmPayment(orderId: number) {
+  const orders = await sql`
+    SELECT shipping_email, shipping_name, total::float8 AS total
+    FROM orders WHERE id = ${orderId}
+  `
+  const o = orders[0] as any
+  if (!o) return { error: 'Order not found' }
+
+  await sql`UPDATE orders SET status = 'confirmed' WHERE id = ${orderId}`
+
+  await sendPaymentConfirmation({
+    orderId,
+    customerEmail: o.shipping_email,
+    customerName: o.shipping_name ?? 'Customer',
+    total: o.total,
+  }).catch(() => {})
 
   revalidatePath(`/admin/orders/${orderId}`)
   revalidatePath('/admin/orders')
