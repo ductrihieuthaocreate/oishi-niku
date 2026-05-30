@@ -9,7 +9,7 @@ export async function createProduct(formData: FormData) {
   const name = formData.get('name') as string
   try {
     const [product] = await sql`
-      INSERT INTO products (name, slug, description, price, stock, weight_grams, cut_type, grade, origin, category_id, image_url, images, is_featured)
+      INSERT INTO products (name, slug, description, price, stock, weight_grams, cut_type, grade, origin, category_id, image_url, images, is_featured, stars)
       VALUES (
         ${name},
         ${slugify(name)},
@@ -23,7 +23,8 @@ export async function createProduct(formData: FormData) {
         ${formData.get('category_id') ? parseInt(formData.get('category_id') as string) : null},
         ${(formData.get('image_url') as string) || null},
         '{}',
-        ${formData.get('is_featured') === 'true'}
+        ${formData.get('is_featured') === 'true'},
+        ${formData.get('stars') ? parseInt(formData.get('stars') as string) : null}
       )
       RETURNING id
     `
@@ -54,6 +55,7 @@ export async function updateProduct(id: number, formData: FormData) {
         category_id  = ${formData.get('category_id') ? parseInt(formData.get('category_id') as string) : null},
         image_url    = ${(formData.get('image_url') as string) || null},
         is_featured  = ${formData.get('is_featured') === 'true'},
+        stars        = ${formData.get('stars') ? parseInt(formData.get('stars') as string) : null},
         updated_at   = NOW()
       WHERE id = ${id}
     `

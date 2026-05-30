@@ -135,6 +135,23 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
         <Textarea id="description" name="description" defaultValue={product?.description ?? ''} className="mt-1.5" rows={4} placeholder="Describe the product, flavor profile, cooking recommendations..." />
       </div>
 
+      <div>
+        <Label htmlFor="stars">Star Rating (shown on product card)</Label>
+        <select
+          id="stars"
+          name="stars"
+          defaultValue={product?.stars ?? ''}
+          className="mt-1.5 flex h-10 w-full rounded-md border border-border bg-input px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <option value="">No stars</option>
+          <option value="1">★☆☆☆☆  (1)</option>
+          <option value="2">★★☆☆☆  (2)</option>
+          <option value="3">★★★☆☆  (3)</option>
+          <option value="4">★★★★☆  (4)</option>
+          <option value="5">★★★★★  (5)</option>
+        </select>
+      </div>
+
       <div className="flex items-center gap-3">
         <input
           type="checkbox"
