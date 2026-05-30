@@ -1,21 +1,16 @@
 import { Suspense } from 'react'
 import { unstable_cache } from 'next/cache'
-import lazyLoad from 'next/dynamic'
 import { sql } from '@/lib/db'
 import { getLang, dict } from '@/lib/lang'
 import { ProductCard } from '@/components/product/product-card'
 import { BestSellers } from '@/components/home/best-sellers'
+import { AnnouncementCarousel } from '@/components/home/announcement-carousel'
 import { Sidebar } from '@/components/product/sidebar'
 import { ProductFilters } from '@/components/product/product-filters'
 import { Pagination } from '@/components/product/pagination'
 import type { Product, Category } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
-
-const AnnouncementCarousel = lazyLoad(
-  () => import('@/components/home/announcement-carousel').then(m => m.AnnouncementCarousel),
-  { ssr: false }
-)
 
 const PAGE_SIZE = 24
 
