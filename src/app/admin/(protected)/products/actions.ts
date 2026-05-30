@@ -9,11 +9,12 @@ export async function createProduct(formData: FormData) {
   const name = formData.get('name') as string
   try {
     const [product] = await sql`
-      INSERT INTO products (name, slug, description, price, stock, weight_grams, cut_type, grade, origin, category_id, image_url, images, is_featured, stars, sort_order)
+      INSERT INTO products (name, slug, description, description_ja, price, stock, weight_grams, cut_type, grade, origin, category_id, image_url, images, is_featured, stars, sort_order)
       VALUES (
         ${name},
         ${slugify(name)},
         ${(formData.get('description') as string) || null},
+        ${(formData.get('description_ja') as string) || null},
         ${parseFloat(formData.get('price') as string)},
         ${parseInt(formData.get('stock') as string)},
         ${formData.get('weight_grams') ? parseInt(formData.get('weight_grams') as string) : null},
@@ -46,7 +47,8 @@ export async function updateProduct(id: number, formData: FormData) {
       UPDATE products SET
         name         = ${name},
         slug         = ${slugify(name)},
-        description  = ${(formData.get('description') as string) || null},
+        description    = ${(formData.get('description') as string) || null},
+        description_ja = ${(formData.get('description_ja') as string) || null},
         price        = ${parseFloat(formData.get('price') as string)},
         stock        = ${parseInt(formData.get('stock') as string)},
         weight_grams = ${formData.get('weight_grams') ? parseInt(formData.get('weight_grams') as string) : null},

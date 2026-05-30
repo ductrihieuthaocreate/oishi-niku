@@ -6,7 +6,6 @@ import { ProductGallery } from '@/components/product/product-gallery'
 export const dynamic = 'force-dynamic'
 import { AddToCartButton } from '@/components/product/add-to-cart-button'
 import { ProductCard } from '@/components/product/product-card'
-import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { formatPrice } from '@/lib/utils'
 import { Star, Weight, MapPin, Award } from 'lucide-react'
@@ -139,22 +138,19 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
           <Separator />
 
-          {product.description && (
-            <div>
-              <h3 className="font-heading tracking-wider text-foreground mb-3">{pd.about}</h3>
-              <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-            </div>
-          )}
+          {(() => {
+            const desc = lang === 'ja' ? (product.description_ja || product.description) : product.description
+            return desc ? (
+              <div>
+                <h3 className="font-heading tracking-wider text-foreground mb-3">{pd.about}</h3>
+                <p className="text-muted-foreground leading-relaxed">{desc}</p>
+              </div>
+            ) : null
+          })()}
 
           <Separator />
 
           <AddToCartButton product={product} />
-
-          <div className="flex flex-wrap gap-2 pt-2">
-            <Badge variant="outline" className="text-xs">{pd.badgeColdChain}</Badge>
-            <Badge variant="outline" className="text-xs">{pd.badgeHaccp}</Badge>
-            <Badge variant="outline" className="text-xs">{pd.badgeVacuum}</Badge>
-          </div>
         </div>
       </div>
 

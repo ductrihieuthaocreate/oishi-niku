@@ -131,8 +131,13 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
       </div>
 
       <div>
-        <Label htmlFor="description">Description</Label>
-        <Textarea id="description" name="description" defaultValue={product?.description ?? ''} className="mt-1.5" rows={4} placeholder="Describe the product, flavor profile, cooking recommendations..." />
+        <Label htmlFor="description">Description (EN)</Label>
+        <Textarea id="description" name="description" defaultValue={product?.description ?? ''} className="mt-1.5" rows={3} placeholder="Describe the product in English..." />
+      </div>
+
+      <div>
+        <Label htmlFor="description_ja">Description (JP — 日本語説明)</Label>
+        <Textarea id="description_ja" name="description_ja" defaultValue={product?.description_ja ?? ''} className="mt-1.5" rows={3} placeholder="日本語で商品説明を入力してください..." />
       </div>
 
       <div>
