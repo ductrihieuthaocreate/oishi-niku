@@ -64,7 +64,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
               </h4>
               <ul className="space-y-2.5 text-sm text-muted-foreground">
                 <li><a href="/products" className="hover:text-foreground go2go-transition">{t.footer.allProducts}</a></li>
-                <li><a href="/products?sort=popular" className="hover:text-foreground go2go-transition">{t.footer.wagyu}</a></li>
+                <li><a href="/products?category=beef" className="hover:text-foreground go2go-transition">{t.footer.beef}</a></li>
                 <li><a href="/products?category=pork" className="hover:text-foreground go2go-transition">{t.footer.pork}</a></li>
                 <li><a href="/account/orders" className="hover:text-foreground go2go-transition">{t.account.orderHistory}</a></li>
               </ul>
