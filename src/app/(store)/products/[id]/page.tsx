@@ -130,12 +130,12 @@ export default async function ProductDetailPage({ params }: PageProps) {
             )}
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${isOutOfStock ? 'bg-destructive' : 'bg-green-500'}`} />
-            <span className={`text-sm ${isOutOfStock ? 'text-destructive' : 'text-green-500'}`}>
-              {isOutOfStock ? pd.outOfStock : `${pd.inStockBefore}${product.stock}${pd.inStockAfter}`}
-            </span>
-          </div>
+          {isOutOfStock && (
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-destructive" />
+              <span className="text-sm text-destructive">{pd.outOfStock}</span>
+            </div>
+          )}
 
           <Separator />
 
