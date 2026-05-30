@@ -47,6 +47,9 @@ const descriptions: { keyword: string; desc: string }[] = [
   { keyword: 'GÀ MÁI NGON SIZE M','desc': 'Premium quality hen, size Medium — tender and flavourful, perfect for everyday cooking. Great for boiling, steaming, braising, or making a rich, clear chicken soup.' },
   { keyword: 'ĐÙI GÀ DAI',       desc: 'Free-range chicken thigh — bone-in, with firm and flavourful meat. Higher fat content than breast gives it natural juiciness. Perfect for grilling, braising, and roasting.' },
   { keyword: 'ĐÙI GÀ DAI RÚT XƯƠNG','desc': 'Boneless free-range chicken thigh — all the rich flavour of free-range chicken with the convenience of no bones. Quick to cook, great for stir-fry, grilling, or stuffing.' },
+  { keyword: 'GÀ DAI 親鶏',        desc: 'Free-range tough chicken (whole, no head) — firm, flavourful meat from naturally raised birds. The chewy texture is prized in Vietnamese cuisine. Excellent for pho gà and cháo gà.' },
+  { keyword: 'GÀ MÁI 5-6 THÁNG',  desc: '5–6 month old hen, eviscerated. Tender meat with mild flavour, raised to optimal size. Great for everyday cooking — boiling, steaming, or making a light, clear chicken soup.' },
+  { keyword: 'GÀ MÁI 8-10 THÁNG', desc: '8–10 month old hen, eviscerated. More developed flavour and firmer texture from longer rearing. Ideal for slow-cooked soups, steamed dishes, and rich traditional Vietnamese recipes.' },
 ]
 
 export async function GET(req: NextRequest) {
