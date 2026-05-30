@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { formatPrice, formatDate } from '@/lib/utils'
 import { updateOrderStatus } from './actions'
+import { DeleteOrderButton } from './delete-button'
 import type { Order } from '@/lib/types'
 
 interface PageProps {
@@ -48,7 +49,10 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
 
   return (
     <div className="max-w-3xl">
-      <h1 className="font-heading text-3xl tracking-wider text-foreground mb-8">ORDER #{o.id}</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="font-heading text-3xl tracking-wider text-foreground">ORDER #{o.id}</h1>
+        <DeleteOrderButton orderId={o.id} />
+      </div>
 
       <div className="grid sm:grid-cols-2 gap-6 mb-8">
         <div className="bg-card border border-border rounded-xl p-6">

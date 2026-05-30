@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { sql } from '@/lib/db'
 import { sendShippingNotification } from '@/lib/email'
 
@@ -32,7 +33,7 @@ export async function updateOrderStatus(orderId: number, formData: FormData) {
 
   revalidatePath(`/admin/orders/${orderId}`)
   revalidatePath('/admin/orders')
-  return { success: true }
+  redirect(`/admin/orders/${orderId}`)
 }
 
 export async function deleteOrder(orderId: number) {
@@ -43,5 +44,5 @@ export async function deleteOrder(orderId: number) {
     return { error: e.message }
   }
   revalidatePath('/admin/orders')
-  return { success: true }
+  redirect('/admin/orders')
 }
