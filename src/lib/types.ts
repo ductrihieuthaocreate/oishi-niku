@@ -22,6 +22,7 @@ export interface Product {
   sales_count: number
   is_featured: boolean
   stars: number | null
+  sort_order: number | null
   created_at: string
   updated_at: string
   categories?: Category

@@ -54,10 +54,10 @@ async function getProducts(params: Awaited<PageProps['searchParams']>) {
 
   const whereClause = conditions.length ? `WHERE ${conditions.join(' AND ')}` : ''
 
-  let orderClause = 'ORDER BY p.created_at DESC'
-  if (params.sort === 'popular')     orderClause = 'ORDER BY p.sales_count DESC'
-  else if (params.sort === 'price_asc')  orderClause = 'ORDER BY p.price ASC'
-  else if (params.sort === 'price_desc') orderClause = 'ORDER BY p.price DESC'
+  let orderClause = 'ORDER BY p.sort_order ASC NULLS LAST, p.created_at DESC'
+  if (params.sort === 'popular')     orderClause = 'ORDER BY p.sort_order ASC NULLS LAST, p.sales_count DESC'
+  else if (params.sort === 'price_asc')  orderClause = 'ORDER BY p.sort_order ASC NULLS LAST, p.price ASC'
+  else if (params.sort === 'price_desc') orderClause = 'ORDER BY p.sort_order ASC NULLS LAST, p.price DESC'
 
   const mainQuery = `
     SELECT p.*, p.price::float8 AS price,

@@ -136,6 +136,19 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
       </div>
 
       <div>
+        <Label htmlFor="sort_order">Pin Position (push to top of listing)</Label>
+        <Input
+          id="sort_order"
+          name="sort_order"
+          type="number"
+          min="1"
+          defaultValue={product?.sort_order ?? ''}
+          className="mt-1.5"
+          placeholder="e.g. 1 = first, 2 = second, leave empty to not pin"
+        />
+      </div>
+
+      <div>
         <Label htmlFor="stars">Star Rating (shown on product card)</Label>
         <select
           id="stars"
